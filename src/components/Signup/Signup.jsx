@@ -30,6 +30,10 @@ export default function Signup() {
         // ..
       });
     console.log("Zarejestrowano");
+    setValues({
+      email: "",
+      password: "",
+    });
   };
 
   return (
