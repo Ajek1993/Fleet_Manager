@@ -1,12 +1,9 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+console.log(process.env);
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  // apiKey: process.env.REACT_APP_API_KEY,
-  apiKey: "AIzaSyAiibKlHAEnInRzydHKPs2G4FbETif9kuc",
+  apiKey: process.env.REACT_APP_API_KEY,
   authDomain: "fleet-manager-35d92.firebaseapp.com",
   projectId: "fleet-manager-35d92",
   storageBucket: "fleet-manager-35d92.appspot.com",
