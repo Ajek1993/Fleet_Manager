@@ -20,8 +20,17 @@ import TimeToLeaveIcon from "@mui/icons-material/TimeToLeave";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import HomeIcon from "@mui/icons-material/Home";
+import { useNavigate } from "react-router-dom";
 
 export default function MenuAppBar() {
+  const navItems = [
+    { name: "Pojazdy", path: "/cars" },
+    { name: "Naprawy", path: "/services" },
+    { name: "Paliwo", path: "/fuel" },
+    { name: "Koszty", path: "/costs" },
+  ];
+  const navigate = useNavigate();
   const user = useUser();
   const [state, setState] = React.useState(false);
 
@@ -63,9 +72,22 @@ export default function MenuAppBar() {
           role="presentation"
           onClick={toggleDrawer(false)}
         >
+          <ListItem onClick={() => navigate("/")} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Strona główna"} />
+            </ListItemButton>
+          </ListItem>
+          <Divider />
           <List>
-            {["Pojazdy", "Naprawy", "Paliwo", "Koszty"].map((text, index) => (
-              <ListItem key={text} disablePadding>
+            {navItems.map(({ name, path }, index) => (
+              <ListItem
+                key={name}
+                onClick={() => navigate(path)}
+                disablePadding
+              >
                 <ListItemButton>
                   <ListItemIcon>
                     {index === 0 ? (
@@ -78,14 +100,14 @@ export default function MenuAppBar() {
                       <AttachMoneyIcon />
                     )}
                   </ListItemIcon>
-                  <ListItemText primary={text} />
+                  <ListItemText primary={name} />
                 </ListItemButton>
               </ListItem>
             ))}
           </List>
           <Divider />
           <List>
-            <ListItem disablePadding>
+            <ListItem onClick={() => navigate("/user")} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
                   <AccountCircleIcon />
