@@ -12,6 +12,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { app } from "../../firebase";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -36,6 +37,7 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const navigate = useNavigate();
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -56,6 +58,7 @@ export default function SignIn() {
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         alert("Zalogowano pomyślnie");
+        navigate("/");
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -131,12 +134,15 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link
+                  href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                  variant="body2"
+                >
                   Zapomniałeś hasła?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/signup" variant="body2">
                   {"Nie masz konta? Zarejestruj się"}
                 </Link>
               </Grid>

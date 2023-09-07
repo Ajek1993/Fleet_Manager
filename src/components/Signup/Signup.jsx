@@ -10,11 +10,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React, { useState } from "react";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { app } from "../../firebase";
 
 function Copyright(props) {
@@ -129,7 +125,7 @@ export default function SignUp() {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/login" variant="body2">
                   {"Masz konto? Zaloguj się"}
                 </Link>
               </Grid>
@@ -141,14 +137,3 @@ export default function SignUp() {
     </ThemeProvider>
   );
 }
-
-export const handleLogout = () => {
-  const auth = getAuth(app);
-  signOut(auth)
-    .then(() => {
-      alert("Wylogowano pomyślnie");
-    })
-    .catch((error) => {
-      // An error happened.
-    });
-};

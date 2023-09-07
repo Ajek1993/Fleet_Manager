@@ -8,12 +8,17 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useUser } from "../../providers/UserProvider";
 import { handleLogout } from "../Signin/Signin";
+import SideMenu from "./SideMenu";
 
 export default function MenuAppBar() {
+  const [menuDisplay, setMenuDisplay] = React.useState(false);
+  const showMenu = () => {
+    setMenuDisplay(true);
+  };
   const user = useUser();
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="sticky">
         <Toolbar>
           <IconButton
             size="large"
@@ -21,19 +26,26 @@ export default function MenuAppBar() {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            onClick={showMenu}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {user ? `Witaj, ${user.email}` : ""}
           </Typography>
+          {!user && (
+            <Button href="/login" color="inherit">
+              Zaloguj
+            </Button>
+          )}
           {user && (
-            <Button onClick={handleLogout} color="inherit">
+            <Button onClick={handleLogout} href="/login" color="inherit">
               Wyloguj
             </Button>
           )}
         </Toolbar>
       </AppBar>
+      {menuDisplay && <SideMenu />}
     </Box>
   );
 }
