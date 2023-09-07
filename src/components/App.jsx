@@ -8,12 +8,10 @@ import {
   Outlet,
 } from "react-router-dom";
 import UserProvider from "../providers/UserProvider";
-import MenuAppBar from "./Header/MenuAppBar";
 import Home from "./Home/Home";
 import NotFound from "./NotFound";
 import SignIn from "./Signin/Signin";
 import SignUp from "./Signup/Signup";
-import CarsList from "./CarsList";
 
 export default function App() {
   return (
@@ -24,6 +22,11 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/cars" element={<SignUp />} />
+            <Route path="/services" element={<SignUp />} />
+            <Route path="/fuel" element={<SignUp />} />
+            <Route path="/costs" element={<SignUp />} />
+            <Route path="/user" element={<SignUp />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           {/* {        <CarsList /> } */}

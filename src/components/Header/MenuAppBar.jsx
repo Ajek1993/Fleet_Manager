@@ -8,14 +8,26 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useUser } from "../../providers/UserProvider";
 import { handleLogout } from "../Signin/Signin";
-import SideMenu from "./SideMenu";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import TimeToLeaveIcon from "@mui/icons-material/TimeToLeave";
+import ConstructionIcon from "@mui/icons-material/Construction";
+import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 export default function MenuAppBar() {
-  const [menuDisplay, setMenuDisplay] = React.useState(false);
-  const showMenu = () => {
-    setMenuDisplay(true);
-  };
   const user = useUser();
+  const [state, setState] = React.useState(false);
+
+  const toggleDrawer = (change) => (event) => {
+    setState(change);
+  };
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="sticky">
@@ -26,7 +38,7 @@ export default function MenuAppBar() {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-            onClick={showMenu}
+            onClick={toggleDrawer(true)}
           >
             <MenuIcon />
           </IconButton>
@@ -45,7 +57,45 @@ export default function MenuAppBar() {
           )}
         </Toolbar>
       </AppBar>
-      {menuDisplay && <SideMenu />}
+      <Drawer anchor={"left"} open={state} onClose={toggleDrawer(false)}>
+        <Box
+          sx={{ width: 250 }}
+          role="presentation"
+          onClick={toggleDrawer(false)}
+        >
+          <List>
+            {["Pojazdy", "Naprawy", "Paliwo", "Koszty"].map((text, index) => (
+              <ListItem key={text} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    {index === 0 ? (
+                      <TimeToLeaveIcon />
+                    ) : index === 1 ? (
+                      <ConstructionIcon />
+                    ) : index === 2 ? (
+                      <LocalGasStationIcon />
+                    ) : (
+                      <AttachMoneyIcon />
+                    )}
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <AccountCircleIcon />
+                </ListItemIcon>
+                <ListItemText primary={"Użytkownik"} />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </Box>
+      </Drawer>
     </Box>
   );
 }
