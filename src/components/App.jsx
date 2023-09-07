@@ -1,20 +1,18 @@
 import React from "react";
-import Login from "./Login/Login";
-import Signup from "./Signup/Signup";
 import UserProvider from "../providers/UserProvider";
-import Navigation from "./Home/Navigation";
-import Signout from "./Signout/Signout";
+import MenuAppBar from "./Header/MenuAppBar";
 import CarsList from "./CarsList";
+import SignIn from "./Signin/Signin";
+import SignUp from "./Signup/Signup";
 
 export default function App() {
   return (
     <div>
       <UserProvider>
-        <Navigation />
-        <Login />
-        <Signup />
-        <Signout />
-        <CarsList />
+        <MenuAppBar />
+        <SignIn />
+        <SignUp />
+        {/* {        <CarsList /> } */}
       </UserProvider>
     </div>
   );

@@ -10,11 +10,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React, { useState } from "react";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { app } from "../../firebase";
 
 function Copyright(props) {
@@ -39,7 +35,7 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function SignUp() {
+export default function SignIn() {
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -52,18 +48,19 @@ export default function SignUp() {
     }));
   };
 
-  const handleAdd = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
     const auth = getAuth(app);
 
     const { email, password } = values;
-    createUserWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        alert("Zarejestrowano pomyślnie");
+        alert("Zalogowano pomyślnie");
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        alert("Błędny login lub hasło");
       });
 
     setValues({
@@ -88,14 +85,19 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Rejestracja
+            Logowanie
           </Typography>
-          <Box component="form" onSubmit={handleAdd} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={handleLogin}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               required
               fullWidth
-              id="new_email"
+              id="email"
               label="Email Address"
               autoComplete="email"
               autoFocus
@@ -110,7 +112,7 @@ export default function SignUp() {
               required
               fullWidth
               label="Password"
-              id="new_password"
+              id="password"
               autoComplete="current-password"
               name="password"
               type="password"
@@ -123,14 +125,19 @@ export default function SignUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={handleAdd}
+              onClick={handleLogin}
             >
-              Zarejestruj
+              Zaloguj
             </Button>
             <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Zapomniałeś hasła?
+                </Link>
+              </Grid>
               <Grid item>
                 <Link href="#" variant="body2">
-                  {"Masz konto? Zaloguj się"}
+                  {"Nie masz konta? Zarejestruj się"}
                 </Link>
               </Grid>
             </Grid>
