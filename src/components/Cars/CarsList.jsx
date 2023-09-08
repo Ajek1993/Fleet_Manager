@@ -1,6 +1,6 @@
 import React from "react";
-import { cars } from "../firebase";
-import { useUser } from "../providers/UserProvider";
+import { cars } from "../../firebase";
+import { useUser } from "../../providers/UserProvider";
 
 export default function CarsList() {
   const user = useUser();
