@@ -22,7 +22,7 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="https://github.com/Ajek1993" target="_blank">
         Arkadiusz Sarach
       </Link>{" "}
       {new Date().getFullYear()}
@@ -41,6 +41,8 @@ export default function SignUp() {
     password: "",
   });
 
+  const [errors, setErrors] = useState({ email: "", password: "" });
+
   const handleChange = ({ target: { name, value } }) => {
     setValues((prev) => ({
       ...prev,
@@ -50,27 +52,66 @@ export default function SignUp() {
 
   const handleAdd = (e) => {
     e.preventDefault();
+
+    // Validation
+    if (
+      !values.email ||
+      values.email.indexOf("@") === -1 ||
+      values.email.lastIndexOf(".") < values.email.lastIndexOf("@")
+    ) {
+      setErrors((prev) => ({
+        ...prev,
+        email: 1,
+      }));
+    } else {
+      setErrors((prev) => ({
+        ...prev,
+        email: "",
+      }));
+    }
+
+    if (!values.password || values.password.length < 6) {
+      setErrors((prev) => ({
+        ...prev,
+        password: 1,
+      }));
+    } else {
+      setErrors((prev) => ({
+        ...prev,
+        paswword: "",
+      }));
+    }
+
     const auth = getAuth(app);
 
     const { email, password } = values;
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
         alert("Zarejestrowano pomyślnie");
+        setValues({
+          email: "",
+          password: "",
+        });
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
       });
-
-    setValues({
-      email: "",
-      password: "",
-    });
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
+      <Container
+        component="main"
+        maxWidth="xs"
+        sx={{
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <CssBaseline />
         <Box
           sx={{
@@ -87,33 +128,70 @@ export default function SignUp() {
             Rejestracja
           </Typography>
           <Box component="form" onSubmit={handleAdd} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="new_email"
-              label="Email Address"
-              autoComplete="email"
-              autoFocus
-              name="email"
-              type="email"
-              placeholder="Podaj email"
-              value={values.email}
-              onChange={handleChange}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              label="Password"
-              id="new_password"
-              autoComplete="current-password"
-              name="password"
-              type="password"
-              placeholder="Podaj email"
-              value={values.password}
-              onChange={handleChange}
-            />
+            {!errors.email ? (
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                autoComplete="email"
+                autoFocus
+                name="email"
+                type="email"
+                placeholder="Podaj email"
+                value={values.email}
+                onChange={handleChange}
+              />
+            ) : (
+              <TextField
+                error
+                helperText="Błędny email"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                autoComplete="email"
+                autoFocus
+                name="email"
+                type="email"
+                placeholder="Podaj email"
+                value={values.email}
+                onChange={handleChange}
+              />
+            )}
+            {!errors.password ? (
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                label="Password"
+                id="password"
+                autoComplete="current-password"
+                name="password"
+                type="password"
+                placeholder="Podaj email"
+                value={values.password}
+                onChange={handleChange}
+              />
+            ) : (
+              <TextField
+                error
+                helperText="Błędne hasło. Hasło musi mieć długość min. 6 znaków"
+                margin="normal"
+                required
+                fullWidth
+                label="Password"
+                id="password"
+                autoComplete="current-password"
+                name="password"
+                type="password"
+                placeholder="Podaj email"
+                value={values.password}
+                onChange={handleChange}
+              />
+            )}
             <Button
               type="submit"
               fullWidth
