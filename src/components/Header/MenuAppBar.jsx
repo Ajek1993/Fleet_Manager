@@ -52,7 +52,7 @@ export default function MenuAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {user ? `Witaj, ${user.displayName}` : ""}
+            {user ? `Witaj, ${user.displayName || user.email}` : ""}
           </Typography>
           {!user && (
             <Button href="/login" color="inherit">
