@@ -227,14 +227,3 @@ export default function SignIn() {
     </ThemeProvider>
   );
 }
-
-export const handleLogout = () => {
-  const auth = getAuth(app);
-  signOut(auth)
-    .then(() => {
-      alert("Wylogowano pomyślnie");
-    })
-    .catch((error) => {
-      // An error happened.
-    });
-};

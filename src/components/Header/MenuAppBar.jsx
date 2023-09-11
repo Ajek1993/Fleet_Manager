@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useUser } from "../../providers/UserProvider";
-import { handleLogout } from "../Signin/Signin";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -21,7 +20,8 @@ import ConstructionIcon from "@mui/icons-material/Construction";
 import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import HomeIcon from "@mui/icons-material/Home";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function MenuAppBar() {
   const navItems = [
@@ -31,12 +31,33 @@ export default function MenuAppBar() {
     { name: "Koszty", path: "/costs" },
   ];
   const navigate = useNavigate();
-  const user = useUser();
+  const { user, handleLogout } = useUser();
   const [state, setState] = React.useState(false);
 
   const toggleDrawer = (change) => (event) => {
     setState(change);
   };
+
+  const getUser = () => {
+    switch (user) {
+      case false:
+        return <CircularProgress color="secondary" />;
+      case null:
+        return (
+          <Button href="/login" color="inherit">
+            Zaloguj
+          </Button>
+        );
+
+      default:
+        return (
+          <Typography component="p">
+            Witaj, {user.displayName || user.email}
+          </Typography>
+        );
+    }
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="sticky">
@@ -52,15 +73,15 @@ export default function MenuAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {user ? `Witaj, ${user.displayName || user.email}` : ""}
+            {getUser()}
           </Typography>
-          {!user && (
-            <Button href="/login" color="inherit">
+          {user === null && (
+            <Button component={Link} href="/login" color="inherit">
               Zaloguj
             </Button>
           )}
           {user && (
-            <Button onClick={handleLogout} href="/login" color="inherit">
+            <Button onClick={handleLogout} color="inherit">
               Wyloguj
             </Button>
           )}

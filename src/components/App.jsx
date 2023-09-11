@@ -6,6 +6,7 @@ import {
   Link,
   NavLink,
   Outlet,
+  useNavigate,
 } from "react-router-dom";
 import UserProvider from "../providers/UserProvider";
 import Home from "./Home/Home";
@@ -17,14 +18,22 @@ import Services from "./Cars/Cars";
 import Fuel from "./Fuel/Fuel";
 import Costs from "./Costs/Costs";
 import User from "./User/User";
+import { PrivateRoute } from "./PrivateRoute";
 
 export default function App() {
   return (
     <div>
-      <UserProvider>
-        <BrowserRouter>
+      <BrowserRouter>
+        <UserProvider>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <Home />
+                </PrivateRoute>
+              }
+            />
             <Route path="/login" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/cars" element={<Cars />} />
@@ -34,8 +43,8 @@ export default function App() {
             <Route path="/user" element={<User />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </BrowserRouter>
-      </UserProvider>
+        </UserProvider>
+      </BrowserRouter>
     </div>
   );
 }

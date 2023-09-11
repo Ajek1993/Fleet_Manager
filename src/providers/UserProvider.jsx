@@ -1,11 +1,25 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { app } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext(null);
 
 export default function UserProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    const auth = getAuth(app);
+    signOut(auth)
+      .then(() => {
+        alert("Wylogowano pomyślnie");
+        navigate("/login");
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
 
   useEffect(() => {
     const auth = getAuth(app);
@@ -18,6 +32,10 @@ export default function UserProvider({ children }) {
       }
     });
   }, []);
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={{ user, handleLogout }}>
+      {children}
+    </UserContext.Provider>
+  );
 }
 export const useUser = () => useContext(UserContext);
