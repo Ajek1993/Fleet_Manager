@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
+import { getFirestore } from "firebase/firestore/lite";
 console.log(process.env);
 
 // Your web app's Firebase configuration
@@ -15,12 +15,5 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const querySnapshot = await getDocs(collection(db, "cars"));
-const cars = [];
 
-querySnapshot.forEach((car) => {
-  const carInfo = car.data();
-  cars.push(carInfo);
-});
-
-export { db, cars };
+export { db };

@@ -28,6 +28,7 @@ export default function CarsListItem({
           border: "2px solid #1976d2",
           borderRadius: "5px",
           width: "auto",
+          backgroundColor: "#fff",
         }}
         onClick={handleClick}
       >

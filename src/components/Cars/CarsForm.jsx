@@ -47,6 +47,8 @@ export default function CarsForm({ handleFormOpen }) {
           flexDirection: "column",
           alignItems: "center",
           padding: "10px",
+          backgroundColor: "#fff",
+          borderRadius: "10px",
         }}
         noValidate
         autoComplete="off"
@@ -57,6 +59,7 @@ export default function CarsForm({ handleFormOpen }) {
           variant="standard"
           value={car.plate}
           name="plate"
+          type="text"
           onChange={handleChange}
         />
         <TextField
@@ -65,6 +68,7 @@ export default function CarsForm({ handleFormOpen }) {
           variant="standard"
           value={car.brand}
           name="brand"
+          type="text"
           onChange={handleChange}
         />
         <TextField
@@ -73,6 +77,7 @@ export default function CarsForm({ handleFormOpen }) {
           variant="standard"
           value={car.model}
           name="model"
+          type="text"
           onChange={handleChange}
         />
         <TextField
@@ -81,6 +86,7 @@ export default function CarsForm({ handleFormOpen }) {
           variant="standard"
           value={car.insurance}
           name="insurance"
+          type="date"
           onChange={handleChange}
         />
         <TextField
@@ -89,6 +95,7 @@ export default function CarsForm({ handleFormOpen }) {
           variant="standard"
           value={car.technicalExamination}
           name="technicalExamination"
+          type="date"
           onChange={handleChange}
         />
         <TextField
@@ -97,6 +104,7 @@ export default function CarsForm({ handleFormOpen }) {
           variant="standard"
           value={car.oilChange}
           name="oilChange"
+          type="date"
           onChange={handleChange}
         />
         <TextField
@@ -105,6 +113,9 @@ export default function CarsForm({ handleFormOpen }) {
           variant="standard"
           value={car.startMilage}
           name="startMilage"
+          type="number"
+          min="1"
+          max="1000000"
           onChange={handleChange}
         />
         <Button

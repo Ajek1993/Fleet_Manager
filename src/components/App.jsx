@@ -6,7 +6,7 @@ import NotFound from "./NotFound";
 import SignIn from "./Signin/Signin";
 import SignUp from "./Signup/Signup";
 import Cars from "./Cars/Cars";
-import Services from "./Cars/Cars";
+import Services from "./Services/Services";
 import Fuel from "./Fuel/Fuel";
 import Costs from "./Costs/Costs";
 import User from "./User/User";
@@ -18,14 +18,7 @@ export default function App() {
       <BrowserRouter>
         <UserProvider>
           <Routes>
-            <Route
-              path="/"
-              element={
-                <PrivateRoute>
-                  <Home />
-                </PrivateRoute>
-              }
-            />
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route

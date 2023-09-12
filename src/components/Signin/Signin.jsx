@@ -93,7 +93,6 @@ export default function SignIn() {
         });
       })
       .catch((error) => {
-        alert("Błąd logowania");
       });
   };
 

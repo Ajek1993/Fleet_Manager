@@ -32,7 +32,6 @@ export default function MenuAppBar() {
   ];
   const navigate = useNavigate();
   const { user, handleLogout } = useUser();
-  const [userName, setUserName] = React.useState();
   const [state, setState] = React.useState(false);
 
   const toggleDrawer = (change) => (event) => {
@@ -42,7 +41,7 @@ export default function MenuAppBar() {
   const getUser = () => {
     switch (user) {
       case false:
-        return <CircularProgress color="secondary" />;
+        return <CircularProgress sx={{ color: "white" }} />;
       case null:
         return (
           <Button href="/login" color="inherit">
