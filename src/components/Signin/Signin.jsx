@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React, { useState } from "react";
-import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 
@@ -93,8 +93,7 @@ export default function SignIn() {
         });
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        alert("Błąd logowania");
       });
   };
 
@@ -209,13 +208,20 @@ export default function SignIn() {
               <Grid item xs>
                 <Link
                   href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                  target="_blank"
                   variant="body2"
                 >
                   Zapomniałeś hasła?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/signup" variant="body2">
+                <Link
+                  variant="body2"
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => {
+                    navigate("/signup");
+                  }}
+                >
                   {"Nie masz konta? Zarejestruj się"}
                 </Link>
               </Grid>

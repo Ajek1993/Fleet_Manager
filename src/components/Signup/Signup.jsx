@@ -97,8 +97,7 @@ export default function SignUp() {
         navigate("/");
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        alert("Błąd rejestracji");
       });
   };
 
@@ -206,7 +205,13 @@ export default function SignUp() {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="/login" variant="body2">
+                <Link
+                  variant="body2"
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => {
+                    navigate("/login");
+                  }}
+                >
                   {"Masz konto? Zaloguj się"}
                 </Link>
               </Grid>

@@ -20,7 +20,7 @@ import ConstructionIcon from "@mui/icons-material/Construction";
 import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import HomeIcon from "@mui/icons-material/Home";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function MenuAppBar() {
@@ -32,6 +32,7 @@ export default function MenuAppBar() {
   ];
   const navigate = useNavigate();
   const { user, handleLogout } = useUser();
+  const [userName, setUserName] = React.useState();
   const [state, setState] = React.useState(false);
 
   const toggleDrawer = (change) => (event) => {
@@ -75,11 +76,11 @@ export default function MenuAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {getUser()}
           </Typography>
-          {user === null && (
+          {/* {user === null && (
             <Button component={Link} href="/login" color="inherit">
               Zaloguj
             </Button>
-          )}
+          )} */}
           {user && (
             <Button onClick={handleLogout} color="inherit">
               Wyloguj

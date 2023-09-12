@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-  Link,
-  NavLink,
-  Outlet,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import UserProvider from "../providers/UserProvider";
 import Home from "./Home/Home";
 import NotFound from "./NotFound";
@@ -36,11 +28,46 @@ export default function App() {
             />
             <Route path="/login" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/cars" element={<Cars />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/fuel" element={<Fuel />} />
-            <Route path="/costs" element={<Costs />} />
-            <Route path="/user" element={<User />} />
+            <Route
+              path="/cars"
+              element={
+                <PrivateRoute>
+                  <Cars />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/services"
+              element={
+                <PrivateRoute>
+                  <Services />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/fuel"
+              element={
+                <PrivateRoute>
+                  <Fuel />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/costs"
+              element={
+                <PrivateRoute>
+                  <Costs />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/user"
+              element={
+                <PrivateRoute>
+                  <User />
+                </PrivateRoute>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </UserProvider>
