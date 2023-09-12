@@ -43,7 +43,7 @@ export default function CarInfo({
               key={row}
               sx={{
                 "&:last-child td, &:last-child th": { border: 0 },
-                padding: "6px",
+                "& > td": { padding: "6px" },
               }}
             >
               <TableCell component="th" scope="row">
