@@ -9,6 +9,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import CarsFormEdit from "./CarsFormEdit";
+import { doc, deleteDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 export default function CarInfo({
   carInfo: {
@@ -61,7 +64,9 @@ export default function CarInfo({
     console.log("będzie edytowanie");
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    console.log(plate);
+    await deleteDoc(doc(db, "cars", plate));
     console.log("będzie usuwanie");
   };
   return (
@@ -102,7 +107,19 @@ export default function CarInfo({
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={style}></Box>
+          <Box sx={style}>
+            <CarsFormEdit
+              carInfo={{
+                plate,
+                brand,
+                model,
+                insurance,
+                technicalExamination,
+                oilChange,
+                startMilage,
+              }}
+            />
+          </Box>
         </Modal>
       )}
     </>
