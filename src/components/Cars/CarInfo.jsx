@@ -109,6 +109,7 @@ export default function CarInfo({
         >
           <Box sx={style}>
             <CarsFormEdit
+              handleClose={handleClose}
               carInfo={{
                 plate,
                 brand,

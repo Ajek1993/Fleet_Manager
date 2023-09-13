@@ -14,6 +14,7 @@ export default function CarsFormEdit({
     oilChange,
     startMilage,
   },
+  handleClose,
 }) {
   const [car, setCar] = useState({
     plate,
@@ -32,9 +33,10 @@ export default function CarsFormEdit({
     }));
   };
 
-  const handleAddCar = async (e) => {
+  const handleEditCar = async (e) => {
     e.preventDefault();
     await setDoc(doc(db, "cars", car.plate), car, { merge: true });
+    handleClose();
   };
   return (
     <Container maxWidth="md">
@@ -122,7 +124,7 @@ export default function CarsFormEdit({
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
-          onClick={handleAddCar}
+          onClick={handleEditCar}
         >
           Zapisz
         </Button>
