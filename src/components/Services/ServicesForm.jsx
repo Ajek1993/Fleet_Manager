@@ -6,12 +6,11 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { carsPlates } from "../../providers/UserProvider";
-
-// import { doc, setDoc } from "firebase/firestore/lite";
-// import { db } from "../../firebase";
+import { doc, updateDoc, arrayUnion } from "firebase/firestore/lite";
+import { db } from "../../firebase";
 
 export default function ServicesForm({ handleFormOpen }) {
-  // const today = new Date().toLocaleDateString("en-CA");
+  const today = new Date().toLocaleDateString("en-CA");
 
   const [service, setService] = useState({
     carPlate: "",
@@ -19,6 +18,7 @@ export default function ServicesForm({ handleFormOpen }) {
     costNetto: "",
     costBrutto: "",
     invoiceNumber: "",
+    dateOfService: today,
   });
 
   const handleChange = ({ target: { name, value } }) => {
@@ -30,6 +30,16 @@ export default function ServicesForm({ handleFormOpen }) {
 
   const handleAddService = async (e) => {
     e.preventDefault();
+
+    await updateDoc(doc(db, "cars", service.carPlate), {
+      services: arrayUnion({
+        name: service.name,
+        costNetto: service.costNetto,
+        costBrutto: service.costBrutto,
+        invoiceNumber: service.invoiceNumber,
+        dateOfService: service.dateOfService,
+      }),
+    });
 
     handleFormOpen();
   };
@@ -104,6 +114,15 @@ export default function ServicesForm({ handleFormOpen }) {
           value={service.invoiceNumber}
           name="invoiceNumber"
           type="text"
+          onChange={handleChange}
+        />
+        <TextField
+          required
+          label="Data wykonania usługi"
+          variant="standard"
+          value={service.dateOfService}
+          name="dateOfService"
+          type="date"
           onChange={handleChange}
         />
 

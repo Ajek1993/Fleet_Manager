@@ -4,44 +4,7 @@ import { Button } from "@mui/material";
 import { doc, setDoc } from "firebase/firestore/lite";
 import { db } from "../../firebase";
 
-// const months = [
-//   "january",
-//   "fabruary",
-//   "march",
-//   "april",
-//   "may",
-//   "july",
-//   "august",
-//   "september",
-//   "october",
-//   "november",
-//   "december",
-// ];
-
-// const data = {
-//   name: "",
-//   costNetto: "",
-//   costBrutto: "",
-//   invoiceNumber: "",
-// };
-
 export default function CarsForm({ handleFormOpen }) {
-  const carServices = {
-    2023: {
-      january: {},
-      fabruary: {},
-      march: {},
-      april: {},
-      may: {},
-      july: {},
-      august: {},
-      september: {},
-      october: {},
-      november: {},
-      december: {},
-    },
-  };
-
   const today = new Date().toLocaleDateString("en-CA");
 
   const [car, setCar] = useState({
@@ -52,6 +15,7 @@ export default function CarsForm({ handleFormOpen }) {
     technicalExamination: today,
     oilChange: today,
     actualMilage: "",
+    services: [],
   });
 
   const handleChange = ({ target: { name, value } }) => {
@@ -64,7 +28,6 @@ export default function CarsForm({ handleFormOpen }) {
   const handleAddCar = async (e) => {
     e.preventDefault();
     await setDoc(doc(db, "cars", car.plate), car);
-    await setDoc(doc(db, "services", car.plate), carServices);
 
     setCar({
       plate: "",
