@@ -3,23 +3,13 @@ import { useUser } from "../../providers/UserProvider";
 import List from "@mui/material/List";
 import CarsListItem from "./CarsListItem";
 import { Container } from "@mui/material";
-import { collection, getDocs } from "firebase/firestore/lite";
-import { db } from "../../firebase";
-
-const carsCollection = collection(db, "cars");
-const querySnapshot = await getDocs(carsCollection);
-const cars = [];
-
-querySnapshot.forEach((car) => {
-  const carInfo = car.data();
-  cars.push(carInfo);
-});
+import { cars } from "../../providers/UserProvider";
 
 export default function CarsList() {
   const user = useUser();
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" sx={{ p: 0 }}>
       {user && (
         <List>
           {cars.map(
@@ -30,7 +20,7 @@ export default function CarsList() {
               insurance,
               technicalExamination,
               oilChange,
-              startMilage,
+              actualMilage,
             }) => (
               <CarsListItem
                 carInfo={{
@@ -40,7 +30,7 @@ export default function CarsList() {
                   insurance,
                   technicalExamination,
                   oilChange,
-                  startMilage,
+                  actualMilage,
                 }}
                 key={plate}
               />

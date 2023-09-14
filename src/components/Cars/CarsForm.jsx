@@ -4,19 +4,19 @@ import { Button } from "@mui/material";
 import { doc, setDoc } from "firebase/firestore/lite";
 import { db } from "../../firebase";
 
-const months = [
-  "january",
-  "fabruary",
-  "march",
-  "april",
-  "may",
-  "july",
-  "august",
-  "september",
-  "october",
-  "november",
-  "december",
-];
+// const months = [
+//   "january",
+//   "fabruary",
+//   "march",
+//   "april",
+//   "may",
+//   "july",
+//   "august",
+//   "september",
+//   "october",
+//   "november",
+//   "december",
+// ];
 
 // const data = {
 //   name: "",
@@ -42,14 +42,16 @@ export default function CarsForm({ handleFormOpen }) {
     },
   };
 
+  const today = new Date().toLocaleDateString("en-CA");
+
   const [car, setCar] = useState({
     plate: "",
     brand: "",
     model: "",
-    insurance: "",
-    technicalExamination: "",
-    oilChange: "",
-    startMilage: "",
+    insurance: today,
+    technicalExamination: today,
+    oilChange: today,
+    actualMilage: "",
   });
 
   const handleChange = ({ target: { name, value } }) => {
@@ -71,7 +73,7 @@ export default function CarsForm({ handleFormOpen }) {
       insurance: "",
       technicalExamination: "",
       oilChange: "",
-      startMilage: "",
+      actualMilage: "",
     });
 
     handleFormOpen();
@@ -150,8 +152,8 @@ export default function CarsForm({ handleFormOpen }) {
           required
           label="aktualny przebieg"
           variant="standard"
-          value={car.startMilage}
-          name="startMilage"
+          value={car.actualMilage}
+          name="actualMilage"
           type="number"
           min="1"
           max="1000000"

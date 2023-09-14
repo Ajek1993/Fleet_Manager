@@ -21,7 +21,7 @@ export default function CarInfo({
     insurance,
     technicalExamination,
     oilChange,
-    startMilage,
+    actualMilage,
   },
 }) {
   const rows = [
@@ -30,7 +30,7 @@ export default function CarInfo({
     insurance,
     technicalExamination,
     oilChange,
-    startMilage,
+    actualMilage,
   ];
 
   const rowsNames = [
@@ -39,7 +39,7 @@ export default function CarInfo({
     "Data ważności polisy OC",
     "Data kolejnego badania technicznego",
     "Data kolejnej wymiany oleju",
-    "Początkowy przebieg",
+    "Aktualny przebieg",
   ];
 
   const style = {
@@ -76,7 +76,7 @@ export default function CarInfo({
           <TableBody>
             {rows.map((row, i) => (
               <TableRow
-                key={row}
+                key={row + i}
                 sx={{
                   "&:last-child td, &:last-child th": { border: 0 },
                   "& > td": { padding: "6px" },
@@ -93,8 +93,16 @@ export default function CarInfo({
               <TableCell
                 sx={{ display: "flex", justifyContent: "space-between" }}
               >
-                <EditIcon onClick={handleEdit} color="warning"></EditIcon>
-                <DeleteIcon onClick={handleDelete} color="error"></DeleteIcon>
+                <EditIcon
+                  onClick={handleEdit}
+                  color="warning"
+                  sx={{ cursor: "pointer" }}
+                ></EditIcon>
+                <DeleteIcon
+                  onClick={handleDelete}
+                  color="error"
+                  sx={{ cursor: "pointer" }}
+                ></DeleteIcon>
               </TableCell>
             </TableRow>
           </TableBody>
@@ -117,7 +125,7 @@ export default function CarInfo({
                 insurance,
                 technicalExamination,
                 oilChange,
-                startMilage,
+                actualMilage,
               }}
             />
           </Box>

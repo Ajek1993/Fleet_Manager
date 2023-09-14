@@ -12,7 +12,7 @@ export default function CarsFormEdit({
     insurance,
     technicalExamination,
     oilChange,
-    startMilage,
+    actualMilage,
   },
   handleClose,
 }) {
@@ -23,7 +23,7 @@ export default function CarsFormEdit({
     insurance,
     technicalExamination,
     oilChange,
-    startMilage,
+    actualMilage,
   });
 
   const handleChange = ({ target: { name, value } }) => {
@@ -47,7 +47,6 @@ export default function CarsFormEdit({
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          padding: "10px",
           backgroundColor: "#fff",
           borderRadius: "10px",
         }}
@@ -112,8 +111,8 @@ export default function CarsFormEdit({
           required
           label="aktualny przebieg"
           variant="standard"
-          value={car.startMilage}
-          name="startMilage"
+          value={car.actualMilage}
+          name="actualMilage"
           type="number"
           min="1"
           max="1000000"

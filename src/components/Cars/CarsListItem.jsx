@@ -12,7 +12,7 @@ export default function CarsListItem({
     insurance,
     technicalExamination,
     oilChange,
-    startMilage,
+    actualMilage,
   },
 }) {
   const [open, setOpen] = useState(false);
@@ -53,7 +53,7 @@ export default function CarsListItem({
             insurance,
             technicalExamination,
             oilChange,
-            startMilage,
+            actualMilage,
           }}
         />
       )}
