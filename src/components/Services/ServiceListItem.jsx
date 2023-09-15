@@ -35,7 +35,7 @@ export default function ServiceListItem({ plate, services }) {
           </ListItemButton>
         </ListItemText>
       </ListItem>
-      {open && <ServiceInfo services={services} />}
+      {open && <ServiceInfo services={services} plate={plate} />}
     </>
   );
 }

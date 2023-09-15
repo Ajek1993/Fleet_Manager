@@ -108,29 +108,28 @@ export default function CarInfo({
           </TableBody>
         </Table>
       </TableContainer>
-      {openModal && (
-        <Modal
-          open={openModal}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <CarsFormEdit
-              handleClose={handleClose}
-              carInfo={{
-                plate,
-                brand,
-                model,
-                insurance,
-                technicalExamination,
-                oilChange,
-                actualMilage,
-              }}
-            />
-          </Box>
-        </Modal>
-      )}
+
+      <Modal
+        open={openModal}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <CarsFormEdit
+            handleClose={handleClose}
+            carInfo={{
+              plate,
+              brand,
+              model,
+              insurance,
+              technicalExamination,
+              oilChange,
+              actualMilage,
+            }}
+          />
+        </Box>
+      </Modal>
     </>
   );
 }

@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import { Box, TextField, Container } from "@mui/material";
 import { Button } from "@mui/material";
-// import { doc, updateDoc, arrayUnion } from "firebase/firestore/lite";
-// import { db } from "../../firebase";
+import { doc, updateDoc, arrayUnion } from "firebase/firestore/lite";
+import { db } from "../../firebase";
 
-export default function ServiceFormEdit({ servicesPerCar, handleClose }) {
+export default function ServiceFormEdit({ servicePerCar, handleClose, plate }) {
+  const { name, costNetto, costBrutto, invoiceNumber, dateOfService } =
+    servicePerCar;
+  console.log(name, plate);
+
   const [service, setService] = useState({
-    carPlate: "",
-    name: "",
-    costNetto: "",
-    costBrutto: "",
-    invoiceNumber: "",
-    dateOfService: "",
+    name,
+    costNetto,
+    costBrutto,
+    invoiceNumber,
+    dateOfService,
   });
-
-  console.log("serviceInfo to:", servicesPerCar);
 
   const handleChange = ({ target: { name, value } }) => {
     setService((prev) => ({
@@ -26,15 +27,15 @@ export default function ServiceFormEdit({ servicesPerCar, handleClose }) {
   const handleEditService = async (e) => {
     e.preventDefault();
 
-    // await updateDoc(doc(db, "cars", service.carPlate), {
-    //   services: arrayUnion({
-    //     name: service.name,
-    //     costNetto: service.costNetto,
-    //     costBrutto: service.costBrutto,
-    //     invoiceNumber: service.invoiceNumber,
-    //     dateOfService: service.dateOfService,
-    //   }),
-    // });
+    await updateDoc(doc(db, "cars", plate), {
+      services: arrayUnion({
+        name: service.name,
+        costNetto: service.costNetto,
+        costBrutto: service.costBrutto,
+        invoiceNumber: service.invoiceNumber,
+        dateOfService: service.dateOfService,
+      }),
+    });
     handleClose();
   };
   return (

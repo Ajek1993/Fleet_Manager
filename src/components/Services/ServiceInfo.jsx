@@ -12,9 +12,7 @@ import ServiceFormEdit from "./ServiceFormEdit";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 
-export default function ServiceInfo({ services }) {
-  const [servicesPerCar, setServicsePerCar] = useState([services]);
-
+export default function ServiceInfo({ services, plate }) {
   const style = {
     position: "absolute",
     top: "50%",
@@ -88,6 +86,27 @@ export default function ServiceInfo({ services }) {
                         color="error"
                         sx={{ cursor: "pointer" }}
                       ></DeleteIcon>
+                      <div>{i}</div>
+                      <Modal
+                        open={openModal}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                      >
+                        <Box sx={style}>
+                          <ServiceFormEdit
+                            servicePerCar={{
+                              name,
+                              costNetto,
+                              costBrutto,
+                              invoiceNumber,
+                              dateOfService,
+                            }}
+                            plate={plate}
+                            handleClose={handleClose}
+                          />
+                        </Box>
+                      </Modal>
                     </TableCell>
                   </TableRow>
                 );
@@ -96,21 +115,6 @@ export default function ServiceInfo({ services }) {
           </TableBody>
         </Table>
       </TableContainer>
-      {openModal && (
-        <Modal
-          open={openModal}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <ServiceFormEdit
-              servicesPerCar={servicesPerCar}
-              handleClose={handleClose}
-            />
-          </Box>
-        </Modal>
-      )}
     </>
   );
 }
