@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 // import { doc, updateDoc, arrayUnion } from "firebase/firestore/lite";
 // import { db } from "../../firebase";
 
-export default function ServiceFormEdit({ serviceInfo, handleClose }) {
+export default function ServiceFormEdit({ servicesPerCar, handleClose }) {
   const [service, setService] = useState({
     carPlate: "",
     name: "",
@@ -14,7 +14,7 @@ export default function ServiceFormEdit({ serviceInfo, handleClose }) {
     dateOfService: "",
   });
 
-  console.log("serviceInfo to:", serviceInfo);
+  console.log("serviceInfo to:", servicesPerCar);
 
   const handleChange = ({ target: { name, value } }) => {
     setService((prev) => ({

@@ -13,6 +13,8 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 
 export default function ServiceInfo({ services }) {
+  const [servicesPerCar, setServicsePerCar] = useState([services]);
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -30,7 +32,7 @@ export default function ServiceInfo({ services }) {
     setOpenModal(false);
   };
 
-  const handleEdit = () => {
+  const handleEdit = (e) => {
     setOpenModal(true);
     console.log("będzie edytowanie");
   };
@@ -59,35 +61,37 @@ export default function ServiceInfo({ services }) {
               (
                 { name, costNetto, costBrutto, invoiceNumber, dateOfService },
                 i
-              ) => (
-                <TableRow
-                  key={name + i}
-                  sx={{
-                    "&:last-child td, &:last-child th": { border: 0 },
-                    "& > td": { padding: "6px" },
-                  }}
-                >
-                  <TableCell align="center">{name}</TableCell>
-                  <TableCell align="center">{costNetto} zł</TableCell>
-                  <TableCell align="center">{costBrutto} zł</TableCell>
-                  <TableCell align="center">{dateOfService}</TableCell>
-                  <TableCell align="center">{invoiceNumber}</TableCell>
-                  <TableCell
-                    sx={{ display: "flex", justifyContent: "space-between" }}
+              ) => {
+                return (
+                  <TableRow
+                    key={name + i}
+                    sx={{
+                      "&:last-child td, &:last-child th": { border: 0 },
+                      "& > td": { padding: "6px" },
+                    }}
                   >
-                    <EditIcon
-                      onClick={handleEdit}
-                      color="warning"
-                      sx={{ cursor: "pointer" }}
-                    ></EditIcon>
-                    <DeleteIcon
-                      onClick={handleDelete}
-                      color="error"
-                      sx={{ cursor: "pointer" }}
-                    ></DeleteIcon>
-                  </TableCell>
-                </TableRow>
-              )
+                    <TableCell align="center">{name}</TableCell>
+                    <TableCell align="center">{costNetto} zł</TableCell>
+                    <TableCell align="center">{costBrutto} zł</TableCell>
+                    <TableCell align="center">{dateOfService}</TableCell>
+                    <TableCell align="center">{invoiceNumber}</TableCell>
+                    <TableCell
+                      sx={{ display: "flex", justifyContent: "space-between" }}
+                    >
+                      <EditIcon
+                        onClick={handleEdit}
+                        color="warning"
+                        sx={{ cursor: "pointer" }}
+                      ></EditIcon>
+                      <DeleteIcon
+                        onClick={handleDelete}
+                        color="error"
+                        sx={{ cursor: "pointer" }}
+                      ></DeleteIcon>
+                    </TableCell>
+                  </TableRow>
+                );
+              }
             )}
           </TableBody>
         </Table>
@@ -100,7 +104,10 @@ export default function ServiceInfo({ services }) {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <ServiceFormEdit handleClose={handleClose} />
+            <ServiceFormEdit
+              servicesPerCar={servicesPerCar}
+              handleClose={handleClose}
+            />
           </Box>
         </Modal>
       )}

@@ -8,15 +8,9 @@ export default function ServiceList() {
   return (
     <Container maxWidth="md" sx={{ p: 0 }}>
       <List>
-        {cars.map(
-          ({ plate, services }) => (
-            <ServiceListItem plate={plate} key={plate} services={services} />
-          )
-
-          //   services.map((service) => {
-          //     console.log(plate, service);
-          //   })
-        )}
+        {cars.map(({ plate, services }) => (
+          <ServiceListItem plate={plate} key={plate} services={services} />
+        ))}
       </List>
     </Container>
   );
