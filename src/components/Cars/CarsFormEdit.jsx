@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Box, TextField, Container } from "@mui/material";
 import { Button } from "@mui/material";
-import { doc, setDoc } from "firebase/firestore/lite";
+import { doc, updateDoc } from "firebase/firestore/lite";
 import { db } from "../../firebase";
+import { useUser } from "../../providers/UserProvider";
 
 export default function CarsFormEdit({
   carInfo: {
@@ -16,6 +17,7 @@ export default function CarsFormEdit({
   },
   handleClose,
 }) {
+  const { setCars } = useUser();
   const [car, setCar] = useState({
     plate,
     brand,
@@ -35,7 +37,11 @@ export default function CarsFormEdit({
 
   const handleEditCar = async (e) => {
     e.preventDefault();
-    await setDoc(doc(db, "cars", car.plate), car, { merge: true });
+    await updateDoc(doc(db, "cars", car.plate), car, { merge: true });
+    setCars((prev) => [
+      car,
+      ...prev.filter(({ plate }) => plate !== car.plate),
+    ]);
     handleClose();
   };
   return (

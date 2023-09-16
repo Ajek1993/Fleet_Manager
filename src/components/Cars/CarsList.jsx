@@ -2,9 +2,10 @@ import React from "react";
 import List from "@mui/material/List";
 import CarsListItem from "./CarsListItem";
 import { Container } from "@mui/material";
-import { cars } from "../../providers/UserProvider";
+import { useUser } from "../../providers/UserProvider";
 
 export default function CarsList() {
+  const { cars } = useUser();
   return (
     <Container maxWidth="md" sx={{ p: 0 }}>
       <List>

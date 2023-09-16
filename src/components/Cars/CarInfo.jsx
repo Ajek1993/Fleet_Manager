@@ -66,7 +66,7 @@ export default function CarInfo({
 
   const handleDelete = async () => {
     console.log(plate);
-    await deleteDoc(doc(db, "cars", plate));
+    // await deleteDoc(doc(db, "cars", plate));
     console.log("będzie usuwanie");
   };
   return (

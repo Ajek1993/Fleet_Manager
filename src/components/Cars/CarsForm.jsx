@@ -3,10 +3,11 @@ import { Box, TextField, Container } from "@mui/material";
 import { Button } from "@mui/material";
 import { doc, setDoc } from "firebase/firestore/lite";
 import { db } from "../../firebase";
+import { useUser } from "../../providers/UserProvider";
 
 export default function CarsForm({ handleFormOpen }) {
   const today = new Date().toLocaleDateString("en-CA");
-
+  const { setCars } = useUser();
   const [car, setCar] = useState({
     plate: "",
     brand: "",
@@ -28,6 +29,14 @@ export default function CarsForm({ handleFormOpen }) {
   const handleAddCar = async (e) => {
     e.preventDefault();
     await setDoc(doc(db, "cars", car.plate), car);
+    setCars((prev) => [car, ...prev]);
+    await setDoc(doc(db, "services", car.plate), {
+      name: "",
+      costNetto: "",
+      costBrutto: "",
+      invoiceNumber: "",
+      dateOfService: "",
+    });
 
     setCar({
       plate: "",

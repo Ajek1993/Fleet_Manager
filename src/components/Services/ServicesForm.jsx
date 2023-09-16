@@ -5,11 +5,12 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { carsPlates } from "../../providers/UserProvider";
 import { doc, updateDoc, arrayUnion } from "firebase/firestore/lite";
 import { db } from "../../firebase";
+import { useUser } from "../../providers/UserProvider";
 
 export default function ServicesForm({ handleFormOpen }) {
+  const {carsPlates} = useUser()
   const today = new Date().toLocaleDateString("en-CA");
 
   const [service, setService] = useState({
