@@ -69,6 +69,8 @@ export default function ServiceFormEdit({ servicePerCar, handleClose, plate }) {
           value={service.costNetto}
           name="costNetto"
           type="number"
+          min="1"
+          max="99999"
           onChange={handleChange}
         />
         <TextField
@@ -78,6 +80,8 @@ export default function ServiceFormEdit({ servicePerCar, handleClose, plate }) {
           value={service.costBrutto}
           name="costBrutto"
           type="number"
+          min="1"
+          max="99999"
           onChange={handleChange}
         />
         <TextField

@@ -49,13 +49,21 @@ export default function ServiceInfo({ plate }) {
   return (
     <>
       <TableContainer component={Paper}>
-        <Table size="small" aria-label="a dense table">
+        <Table
+          size="small"
+          aria-label="a dense table"
+          sx={{ "& > th, td": { fontSize: 12 } }}
+        >
           <TableHead>
-            <TableRow>
+            <TableRow
+              sx={{
+                "& > th": { padding: "4px 0", textAlign: "center" },
+              }}
+            >
               <TableCell>Zakres naprawy</TableCell>
               <TableCell>Koszt netto</TableCell>
               <TableCell>Koszt brutto</TableCell>
-              <TableCell>Data wykonania usługi</TableCell>
+              <TableCell>Data usługi</TableCell>
               <TableCell>Numer faktury</TableCell>
               <TableCell>Akcje</TableCell>
             </TableRow>
@@ -71,7 +79,7 @@ export default function ServiceInfo({ plate }) {
                     key={name + i}
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
-                      "& > td": { padding: "6px" },
+                      "& > td": { padding: "2px" },
                     }}
                   >
                     <TableCell align="center">{name}</TableCell>
@@ -80,7 +88,7 @@ export default function ServiceInfo({ plate }) {
                     <TableCell align="center">{dateOfService}</TableCell>
                     <TableCell align="center">{invoiceNumber}</TableCell>
                     <TableCell
-                    // sx={{ display: "flex", justifyContent: "space-between" }}
+                      sx={{ display: "flex", justifyContent: "space-between" }}
                     >
                       <EditIcon
                         onClick={handleEdit}

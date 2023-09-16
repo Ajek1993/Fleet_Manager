@@ -104,6 +104,8 @@ export default function ServicesForm({ handleFormOpen }) {
           value={service.costNetto}
           name="costNetto"
           type="number"
+          min="1"
+          max="99999"
           onChange={handleChange}
         />
         <TextField
@@ -113,6 +115,8 @@ export default function ServicesForm({ handleFormOpen }) {
           value={service.costBrutto}
           name="costBrutto"
           type="number"
+          min="1"
+          max="99999"
           onChange={handleChange}
         />
         <TextField
