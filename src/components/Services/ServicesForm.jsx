@@ -5,7 +5,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { addDoc, collection } from "firebase/firestore/lite";
+import { doc, updateDoc, addDoc, collection } from "firebase/firestore/lite";
 import { db } from "../../firebase";
 import { useUser } from "../../providers/UserProvider";
 
@@ -32,7 +32,7 @@ export default function ServicesForm({ handleFormOpen }) {
   const handleAddService = async (e) => {
     e.preventDefault();
 
-    await addDoc(collection(db, "services"), {
+    const docRef = await addDoc(collection(db, "services"), {
       carPlate: service.carPlate,
       name: service.name,
       costNetto: service.costNetto,
@@ -40,6 +40,12 @@ export default function ServicesForm({ handleFormOpen }) {
       invoiceNumber: service.invoiceNumber,
       dateOfService: service.dateOfService,
     });
+    await updateDoc(
+      doc(db, "services", docRef.id),
+      { ID: docRef.id },
+      { merge: true }
+    );
+    console.log("Document written with ID: ", docRef.id);
 
     setServices((prev) => [service, ...prev]);
 

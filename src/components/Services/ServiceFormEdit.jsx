@@ -6,17 +6,19 @@ import { db } from "../../firebase";
 import { useUser } from "../../providers/UserProvider";
 
 export default function ServiceFormEdit({ servicePerCar, handleClose, plate }) {
-  const { name, costNetto, costBrutto, invoiceNumber, dateOfService } =
+  const { name, costNetto, costBrutto, invoiceNumber, dateOfService, ID } =
     servicePerCar;
 
   console.log(servicePerCar);
   const { setServices } = useUser();
   const [service, setService] = useState({
+    carPlate: plate,
     name,
     costNetto,
     costBrutto,
     invoiceNumber,
     dateOfService,
+    ID,
   });
 
   const handleChange = ({ target: { name, value } }) => {
@@ -29,8 +31,11 @@ export default function ServiceFormEdit({ servicePerCar, handleClose, plate }) {
   const handleEditService = async (e) => {
     e.preventDefault();
 
-    await updateDoc(doc(db, "services", plate), service, { merge: true });
-    setServices((prev) => [service, ...prev]);
+    await updateDoc(doc(db, "services", service.ID), service, { merge: true });
+    setServices((prev) => [
+      service,
+      ...prev.filter(({ ID }) => ID !== service.ID),
+    ]);
     handleClose();
   };
   return (

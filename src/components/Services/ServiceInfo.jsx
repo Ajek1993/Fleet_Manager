@@ -15,6 +15,7 @@ import { useUser } from "../../providers/UserProvider";
 
 export default function ServiceInfo({ plate }) {
   const { services } = useUser();
+  console.log(services);
   const servicesPerCar = services.filter(({ carPlate }) => carPlate === plate);
 
   const style = {
