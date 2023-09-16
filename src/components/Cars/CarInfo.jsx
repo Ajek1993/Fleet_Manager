@@ -10,8 +10,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import CarsFormEdit from "./CarsFormEdit";
-import { doc, deleteDoc } from "firebase/firestore";
-import { db } from "../../firebase";
 
 export default function CarInfo({
   carInfo: {
@@ -66,7 +64,6 @@ export default function CarInfo({
 
   const handleDelete = async () => {
     console.log(plate);
-    // await deleteDoc(doc(db, "cars", plate));
     console.log("będzie usuwanie");
   };
   return (

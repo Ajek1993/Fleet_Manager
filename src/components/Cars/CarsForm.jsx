@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, TextField, Container } from "@mui/material";
 import { Button } from "@mui/material";
-import { doc, setDoc, addDoc, collection } from "firebase/firestore/lite";
+import { doc, setDoc } from "firebase/firestore/lite";
 import { db } from "../../firebase";
 import { useUser } from "../../providers/UserProvider";
 

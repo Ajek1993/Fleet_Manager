@@ -29,6 +29,7 @@ export default function ServiceInfo({ plate }) {
     p: 4,
   };
   const [openModal, setOpenModal] = useState(false);
+  const [num, setNum] = useState("");
 
   const handleClose = () => {
     setOpenModal(false);
@@ -37,10 +38,10 @@ export default function ServiceInfo({ plate }) {
   const handleEdit = (e) => {
     setOpenModal(true);
     console.log("będzie edytowanie");
+    setNum(e.currentTarget["id"]);
   };
 
   const handleDelete = async () => {
-    // await deleteDoc(doc(db, "service", plate));
     console.log("będzie usuwanie");
   };
 
@@ -78,39 +79,19 @@ export default function ServiceInfo({ plate }) {
                     <TableCell align="center">{dateOfService}</TableCell>
                     <TableCell align="center">{invoiceNumber}</TableCell>
                     <TableCell
-                      sx={{ display: "flex", justifyContent: "space-between" }}
+                    // sx={{ display: "flex", justifyContent: "space-between" }}
                     >
                       <EditIcon
                         onClick={handleEdit}
                         color="warning"
                         sx={{ cursor: "pointer" }}
+                        id={i}
                       ></EditIcon>
                       <DeleteIcon
                         onClick={handleDelete}
                         color="error"
                         sx={{ cursor: "pointer" }}
                       ></DeleteIcon>
-                      <div>{i}</div>
-                      <Modal
-                        open={openModal}
-                        onClose={handleClose}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                      >
-                        <Box sx={style}>
-                          <ServiceFormEdit
-                            servicePerCar={{
-                              name,
-                              costNetto,
-                              costBrutto,
-                              invoiceNumber,
-                              dateOfService,
-                            }}
-                            plate={plate}
-                            handleClose={handleClose}
-                          />
-                        </Box>
-                      </Modal>
                     </TableCell>
                   </TableRow>
                 );
@@ -119,6 +100,21 @@ export default function ServiceInfo({ plate }) {
           </TableBody>
         </Table>
       </TableContainer>
+      <Modal
+        open={openModal}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <ServiceFormEdit
+            servicePerCar={servicesPerCar[+num]}
+            num={num}
+            plate={plate}
+            handleClose={handleClose}
+          />
+        </Box>
+      </Modal>
     </>
   );
 }
