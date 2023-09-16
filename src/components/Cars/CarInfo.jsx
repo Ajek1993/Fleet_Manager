@@ -10,6 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import CarsFormEdit from "./CarsFormEdit";
+import { useUser } from "../../providers/UserProvider";
 
 export default function CarInfo({
   carInfo: {
@@ -22,6 +23,7 @@ export default function CarInfo({
     actualMilage,
   },
 }) {
+  const { deleteCar } = useUser();
   const rows = [
     brand,
     model,
@@ -64,6 +66,7 @@ export default function CarInfo({
 
   const handleDelete = async () => {
     console.log(plate);
+    // deleteCar(plate);
     console.log("będzie usuwanie");
   };
   return (

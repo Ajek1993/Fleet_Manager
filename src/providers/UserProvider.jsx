@@ -4,6 +4,7 @@ import { app } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore/lite";
 import { db } from "../firebase";
+import { doc, deleteDoc } from "firebase/firestore";
 
 const UserContext = createContext(null);
 
@@ -33,6 +34,10 @@ export default function UserProvider({ children }) {
     get();
   }, []);
 
+  useEffect(() => {
+    setCarsPlates(cars.map((car) => car.plate));
+  }, [cars]);
+
   const handleLogout = () => {
     const auth = getAuth(app);
     signOut(auth)
@@ -57,9 +62,9 @@ export default function UserProvider({ children }) {
     });
   }, []);
 
-  useEffect(() => {
-    setCarsPlates(cars.map((car) => car.plate));
-  }, [cars]);
+  const deleteCar = async (car) => {
+    await deleteDoc(doc(db, "cars", car));
+  };
 
   return (
     <UserContext.Provider
@@ -71,6 +76,7 @@ export default function UserProvider({ children }) {
         carsPlates,
         setCars,
         setServices,
+        deleteCar,
       }}
     >
       {children}
