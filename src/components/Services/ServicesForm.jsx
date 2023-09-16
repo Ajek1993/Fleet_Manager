@@ -5,12 +5,12 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { doc, updateDoc, arrayUnion } from "firebase/firestore/lite";
+import { addDoc, collection } from "firebase/firestore/lite";
 import { db } from "../../firebase";
 import { useUser } from "../../providers/UserProvider";
 
 export default function ServicesForm({ handleFormOpen }) {
-  const {carsPlates} = useUser()
+  const { carsPlates, setServices } = useUser();
   const today = new Date().toLocaleDateString("en-CA");
 
   const [service, setService] = useState({
@@ -32,15 +32,26 @@ export default function ServicesForm({ handleFormOpen }) {
   const handleAddService = async (e) => {
     e.preventDefault();
 
-    await updateDoc(doc(db, "cars", service.carPlate), {
-      services: arrayUnion({
-        name: service.name,
-        costNetto: service.costNetto,
-        costBrutto: service.costBrutto,
-        invoiceNumber: service.invoiceNumber,
-        dateOfService: service.dateOfService,
-      }),
+    // await updateDoc(doc(db, "cars", service.carPlate), {
+    //   services: arrayUnion({
+    //     name: service.name,
+    //     costNetto: service.costNetto,
+    //     costBrutto: service.costBrutto,
+    //     invoiceNumber: service.invoiceNumber,
+    //     dateOfService: service.dateOfService,
+    //   }),
+    // });
+
+    await addDoc(collection(db, "services"), {
+      carPlate: service.carPlate,
+      name: service.name,
+      costNetto: service.costNetto,
+      costBrutto: service.costBrutto,
+      invoiceNumber: service.invoiceNumber,
+      dateOfService: service.dateOfService,
     });
+
+    setServices((prev) => [service, ...prev]);
 
     handleFormOpen();
   };

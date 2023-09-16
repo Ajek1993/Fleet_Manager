@@ -3,12 +3,14 @@ import { Box, TextField, Container } from "@mui/material";
 import { Button } from "@mui/material";
 import { doc, updateDoc, arrayUnion } from "firebase/firestore/lite";
 import { db } from "../../firebase";
+import { useUser } from "../../providers/UserProvider";
 
 export default function ServiceFormEdit({ servicePerCar, handleClose, plate }) {
   const { name, costNetto, costBrutto, invoiceNumber, dateOfService } =
     servicePerCar;
   console.log(name, plate);
 
+  const { setServices } = useUser();
   const [service, setService] = useState({
     name,
     costNetto,
@@ -27,15 +29,17 @@ export default function ServiceFormEdit({ servicePerCar, handleClose, plate }) {
   const handleEditService = async (e) => {
     e.preventDefault();
 
-    await updateDoc(doc(db, "cars", plate), {
-      services: arrayUnion({
-        name: service.name,
-        costNetto: service.costNetto,
-        costBrutto: service.costBrutto,
-        invoiceNumber: service.invoiceNumber,
-        dateOfService: service.dateOfService,
-      }),
-    });
+    // await updateDoc(doc(db, "cars", plate), {
+    //   services: arrayUnion({
+    //     name: service.name,
+    //     costNetto: service.costNetto,
+    //     costBrutto: service.costBrutto,
+    //     invoiceNumber: service.invoiceNumber,
+    //     dateOfService: service.dateOfService,
+    //   }),
+    // });
+    await updateDoc(doc(db, "services", plate), service, { merge: true });
+    setServices((prev) => [service, ...prev]);
     handleClose();
   };
   return (

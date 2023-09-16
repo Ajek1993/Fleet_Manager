@@ -11,7 +11,7 @@ export default function UserProvider({ children }) {
   const [user, setUser] = useState(false);
   const [cars, setCars] = useState([]);
   const [services, setServices] = useState([]);
-  const [carPlates, setCarPlates] = useState([]);
+  const [carsPlates, setCarsPlates] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -58,12 +58,20 @@ export default function UserProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    setCarPlates(cars.map((car) => car.plate));
+    setCarsPlates(cars.map((car) => car.plate));
   }, [cars]);
 
   return (
     <UserContext.Provider
-      value={{ user, handleLogout, cars, services, carPlates, setCars }}
+      value={{
+        user,
+        handleLogout,
+        cars,
+        services,
+        carsPlates,
+        setCars,
+        setServices,
+      }}
     >
       {children}
     </UserContext.Provider>

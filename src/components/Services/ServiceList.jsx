@@ -10,8 +10,8 @@ export default function ServiceList() {
   return (
     <Container maxWidth="md" sx={{ p: 0 }}>
       <List>
-        {cars.map(({ plate, services }) => (
-          <ServiceListItem plate={plate} key={plate} services={services} />
+        {cars.map(({ plate}) => (
+          <ServiceListItem plate={plate} key={plate} />
         ))}
       </List>
     </Container>

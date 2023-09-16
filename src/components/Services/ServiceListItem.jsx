@@ -4,7 +4,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import ServiceInfo from "./ServiceInfo";
 
-export default function ServiceListItem({ plate, services }) {
+export default function ServiceListItem({ plate }) {
   const [open, setOpen] = useState(false);
   const handleClick = () => {
     setOpen((prev) => !prev);
@@ -35,7 +35,7 @@ export default function ServiceListItem({ plate, services }) {
           </ListItemButton>
         </ListItemText>
       </ListItem>
-      {open && <ServiceInfo services={services} plate={plate} />}
+      {open && <ServiceInfo plate={plate} />}
     </>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, TextField, Container } from "@mui/material";
 import { Button } from "@mui/material";
-import { doc, setDoc } from "firebase/firestore/lite";
+import { doc, setDoc, addDoc, collection } from "firebase/firestore/lite";
 import { db } from "../../firebase";
 import { useUser } from "../../providers/UserProvider";
 
@@ -16,7 +16,6 @@ export default function CarsForm({ handleFormOpen }) {
     technicalExamination: today,
     oilChange: today,
     actualMilage: "",
-    services: [],
   });
 
   const handleChange = ({ target: { name, value } }) => {
@@ -30,13 +29,6 @@ export default function CarsForm({ handleFormOpen }) {
     e.preventDefault();
     await setDoc(doc(db, "cars", car.plate), car);
     setCars((prev) => [car, ...prev]);
-    await setDoc(doc(db, "services", car.plate), {
-      name: "",
-      costNetto: "",
-      costBrutto: "",
-      invoiceNumber: "",
-      dateOfService: "",
-    });
 
     setCar({
       plate: "",

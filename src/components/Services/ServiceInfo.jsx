@@ -11,8 +11,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ServiceFormEdit from "./ServiceFormEdit";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import { useUser } from "../../providers/UserProvider";
 
-export default function ServiceInfo({ services, plate }) {
+export default function ServiceInfo({ plate }) {
+  const { services } = useUser();
+  const servicesPerCar = services.filter(({ carPlate }) => carPlate === plate);
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -36,7 +40,7 @@ export default function ServiceInfo({ services, plate }) {
   };
 
   const handleDelete = async () => {
-    // await deleteDoc(doc(db, "cars", plate));
+    // await deleteDoc(doc(db, "service", plate));
     console.log("będzie usuwanie");
   };
 
@@ -55,7 +59,7 @@ export default function ServiceInfo({ services, plate }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {services.map(
+            {servicesPerCar.map(
               (
                 { name, costNetto, costBrutto, invoiceNumber, dateOfService },
                 i
