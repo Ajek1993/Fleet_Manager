@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { CardMedia } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React, { useState } from "react";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
@@ -114,6 +115,14 @@ export default function SignUp() {
           justifyContent: "center",
         }}
       >
+        <CardMedia
+          onClick={() => {
+            navigate("/");
+          }}
+          component="img"
+          image="https://imgtr.ee/images/2023/09/19/d73eb7df7e4e27cd871af6976e08e485.png"
+          alt="Paella dish"
+        />
         <CssBaseline />
         <Box
           sx={{

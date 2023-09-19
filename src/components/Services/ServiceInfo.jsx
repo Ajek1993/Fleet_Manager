@@ -16,7 +16,6 @@ import { useUser } from "../../providers/UserProvider";
 
 export default function ServiceInfo({ plate }) {
   const { services, deleteService } = useUser();
-  console.log(services);
   const servicesPerCar = services.filter(({ carPlate }) => carPlate === plate);
 
   const style = {
@@ -147,7 +146,6 @@ export default function ServiceInfo({ plate }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          {console.log(num)}
           <Table
             size="medium"
             aria-label="a dense table"
