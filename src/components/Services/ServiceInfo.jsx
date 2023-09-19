@@ -14,7 +14,7 @@ import Modal from "@mui/material/Modal";
 import { useUser } from "../../providers/UserProvider";
 
 export default function ServiceInfo({ plate }) {
-  const { services } = useUser();
+  const { services, deleteService } = useUser();
   console.log(services);
   const servicesPerCar = services.filter(({ carPlate }) => carPlate === plate);
 
@@ -42,7 +42,8 @@ export default function ServiceInfo({ plate }) {
     setNum(e.currentTarget["id"]);
   };
 
-  const handleDelete = async () => {
+  const handleDelete = async (e) => {
+    deleteService(servicesPerCar[e.currentTarget["id"]]);
     console.log("będzie usuwanie");
   };
 
@@ -100,6 +101,7 @@ export default function ServiceInfo({ plate }) {
                         onClick={handleDelete}
                         color="error"
                         sx={{ cursor: "pointer" }}
+                        id={i}
                       ></DeleteIcon>
                     </TableCell>
                   </TableRow>

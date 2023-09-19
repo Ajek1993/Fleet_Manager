@@ -2,9 +2,9 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { app } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import { collection, getDocs } from "firebase/firestore/lite";
+import { collection, getDocs, doc, deleteDoc } from "firebase/firestore/lite";
 import { db } from "../firebase";
-import { doc, deleteDoc } from "firebase/firestore";
+// import { doc, deleteDoc } from "firebase/firestore";
 
 const UserContext = createContext(null);
 
@@ -63,9 +63,24 @@ export default function UserProvider({ children }) {
   }, []);
 
   const deleteCar = async (car) => {
-    await deleteDoc(doc(db, "cars", car));
+    console.log(car);
+    try {
+      await deleteDoc(doc(db, "cars", car));
+    } catch (e) {
+      console.log(e);
+    }
+    await setCars((prev) => prev.filter((el) => car !== el.plate));
   };
 
+  const deleteService = async (service) => {
+    console.log(service.ID);
+    try {
+      await deleteDoc(doc(db, "services", service.ID));
+    } catch (e) {
+      console.log(e);
+    }
+    await setServices((prev) => prev.filter((el) => el.ID !== service.ID));
+  };
   return (
     <UserContext.Provider
       value={{
@@ -77,6 +92,7 @@ export default function UserProvider({ children }) {
         setCars,
         setServices,
         deleteCar,
+        deleteService,
       }}
     >
       {children}

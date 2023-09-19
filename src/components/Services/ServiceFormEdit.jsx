@@ -30,7 +30,6 @@ export default function ServiceFormEdit({ servicePerCar, handleClose, plate }) {
 
   const handleEditService = async (e) => {
     e.preventDefault();
-
     await updateDoc(doc(db, "services", service.ID), service, { merge: true });
     setServices((prev) => [
       service,

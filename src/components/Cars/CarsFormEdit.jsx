@@ -60,7 +60,7 @@ export default function CarsFormEdit({
         autoComplete="off"
       >
         <TextField
-          required
+          disabled
           label="nr rejestracyjny"
           variant="standard"
           value={car.plate}

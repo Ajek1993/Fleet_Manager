@@ -14,6 +14,7 @@ export default function ServicesForm({ handleFormOpen }) {
   const today = new Date().toLocaleDateString("en-CA");
 
   const [service, setService] = useState({
+    ID: "",
     carPlate: "",
     name: "",
     costNetto: "",
@@ -46,8 +47,8 @@ export default function ServicesForm({ handleFormOpen }) {
       { merge: true }
     );
     console.log("Document written with ID: ", docRef.id);
-
-    setServices((prev) => [service, ...prev]);
+    console.log(docRef);
+    setServices((prev) => [{ ...service, ID: docRef.id }, ...prev]);
 
     handleFormOpen();
   };

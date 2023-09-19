@@ -66,7 +66,7 @@ export default function CarInfo({
 
   const handleDelete = async () => {
     console.log(plate);
-    // deleteCar(plate);
+    deleteCar(plate);
     console.log("będzie usuwanie");
   };
   return (
