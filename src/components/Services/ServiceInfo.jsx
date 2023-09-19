@@ -4,10 +4,11 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
-import { TableHead } from "@mui/material";
+import { Button, TableHead, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import InfoIcon from "@mui/icons-material/Info";
 import ServiceFormEdit from "./ServiceFormEdit";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -27,24 +28,37 @@ export default function ServiceInfo({ plate }) {
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
-    p: 4,
+    p: 3,
   };
   const [openModal, setOpenModal] = useState(false);
+  const [openModalInfo, setOpenModalInfo] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
   const [num, setNum] = useState("");
 
   const handleClose = () => {
     setOpenModal(false);
+    setOpenModalInfo(false);
+    setOpenModalDelete(false);
   };
 
   const handleEdit = (e) => {
     setOpenModal(true);
-    console.log("będzie edytowanie");
     setNum(e.currentTarget["id"]);
   };
 
-  const handleDelete = async (e) => {
-    deleteService(servicesPerCar[e.currentTarget["id"]]);
-    console.log("będzie usuwanie");
+  const handleDelete = (e) => {
+    setOpenModalDelete(true);
+    setNum(e.currentTarget["id"]);
+  };
+
+  const handleDeleteFotSure = async () => {
+    deleteService(servicesPerCar[+num]);
+    setOpenModalDelete(false);
+  };
+
+  const handleInfo = (e) => {
+    setOpenModalInfo(true);
+    setNum(e.currentTarget["id"]);
   };
 
   return (
@@ -58,14 +72,18 @@ export default function ServiceInfo({ plate }) {
           <TableHead>
             <TableRow
               sx={{
-                "& > th": { padding: "4px 0", textAlign: "center" },
+                "& > th": {
+                  padding: "4px 0",
+                  textAlign: "center",
+                  fontWeight: 700,
+                },
               }}
             >
               <TableCell>Zakres naprawy</TableCell>
-              <TableCell>Koszt netto</TableCell>
-              <TableCell>Koszt brutto</TableCell>
+              {/* <TableCell>Koszt netto</TableCell> */}
+              {/* <TableCell>Koszt brutto</TableCell> */}
               <TableCell>Data usługi</TableCell>
-              <TableCell>Numer faktury</TableCell>
+              {/* <TableCell>Numer faktury</TableCell> */}
               <TableCell>Akcje</TableCell>
             </TableRow>
           </TableHead>
@@ -80,17 +98,28 @@ export default function ServiceInfo({ plate }) {
                     key={name + i}
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
-                      "& > td": { padding: "2px" },
+                      "& > td": { padding: "10px 0" },
                     }}
                   >
-                    <TableCell align="center">{name}</TableCell>
-                    <TableCell align="center">{costNetto} zł</TableCell>
-                    <TableCell align="center">{costBrutto} zł</TableCell>
+                    <TableCell align="center" sx={{ maxWidth: "30vw" }}>
+                      {name}
+                    </TableCell>
+                    {/* <TableCell align="center">{costNetto} zł</TableCell> */}
+                    {/* <TableCell align="center">{costBrutto} zł</TableCell> */}
                     <TableCell align="center">{dateOfService}</TableCell>
-                    <TableCell align="center">{invoiceNumber}</TableCell>
+                    {/* <TableCell align="center">{invoiceNumber}</TableCell> */}
                     <TableCell
-                      sx={{ display: "flex", justifyContent: "space-between" }}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-around",
+                      }}
                     >
+                      <InfoIcon
+                        onClick={handleInfo}
+                        color="primary"
+                        sx={{ cursor: "pointer" }}
+                        id={i}
+                      ></InfoIcon>
                       <EditIcon
                         onClick={handleEdit}
                         color="warning"
@@ -112,6 +141,42 @@ export default function ServiceInfo({ plate }) {
         </Table>
       </TableContainer>
       <Modal
+        open={openModalInfo}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          {console.log(num)}
+          <Table
+            size="medium"
+            aria-label="a dense table"
+            sx={{ "& > th, td": { fontSize: 16, p: "10px" } }}
+          >
+            <TableRow>
+              <TableCell>Zakres naprawy</TableCell>
+              <TableCell>{servicesPerCar[+num].name}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Koszt netto</TableCell>
+              <TableCell>{servicesPerCar[+num].costNetto}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Koszt brutto</TableCell>
+              <TableCell>{servicesPerCar[+num].costBrutto}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Data wykonania usługi</TableCell>
+              <TableCell>{servicesPerCar[+num].dateOfService}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Numer faktury</TableCell>
+              <TableCell>{servicesPerCar[+num].invoiceNumber}</TableCell>
+            </TableRow>
+          </Table>
+        </Box>
+      </Modal>
+      <Modal
         open={openModal}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -124,6 +189,26 @@ export default function ServiceInfo({ plate }) {
             plate={plate}
             handleClose={handleClose}
           />
+        </Box>
+      </Modal>
+      <Modal
+        open={openModalDelete}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={{ ...style, display: "flex", flexDirection: "column" }}>
+          <Typography component={"p"} sx={{ textAlign: "center" }}>
+            Czy napewno chcesz usunąć dany element?
+          </Typography>
+          <Button
+            onClick={handleDeleteFotSure}
+            variant="contained"
+            color="error"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            USUŃ
+          </Button>
         </Box>
       </Modal>
     </>

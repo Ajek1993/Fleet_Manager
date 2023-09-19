@@ -5,6 +5,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { Button, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Box from "@mui/material/Box";
@@ -54,20 +55,25 @@ export default function CarInfo({
     p: 4,
   };
   const [openModal, setOpenModal] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
 
   const handleClose = () => {
     setOpenModal(false);
+    setOpenModalDelete(false);
   };
 
   const handleEdit = () => {
     setOpenModal(true);
-    console.log("będzie edytowanie");
   };
 
   const handleDelete = async () => {
     console.log(plate);
+    setOpenModalDelete(true);
+  };
+
+  const handleDeleteFotSure = async () => {
     deleteCar(plate);
-    console.log("będzie usuwanie");
+    setOpenModalDelete(false);
   };
   return (
     <>
@@ -91,7 +97,11 @@ export default function CarInfo({
             <TableRow>
               <TableCell align="center">Akcje</TableCell>
               <TableCell
-                sx={{ display: "flex", justifyContent: "space-between" }}
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  p: "6px 0",
+                }}
               >
                 <EditIcon
                   onClick={handleEdit}
@@ -128,6 +138,26 @@ export default function CarInfo({
               actualMilage,
             }}
           />
+        </Box>
+      </Modal>
+      <Modal
+        open={openModalDelete}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={{ ...style, display: "flex", flexDirection: "column" }}>
+          <Typography component={"p"} sx={{ textAlign: "center" }}>
+            Czy napewno chcesz usunąć dany element?
+          </Typography>
+          <Button
+            onClick={handleDeleteFotSure}
+            variant="contained"
+            color="error"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            USUŃ
+          </Button>
         </Box>
       </Modal>
     </>
