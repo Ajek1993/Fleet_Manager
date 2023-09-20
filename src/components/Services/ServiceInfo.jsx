@@ -151,26 +151,28 @@ export default function ServiceInfo({ plate }) {
             aria-label="a dense table"
             sx={{ "& > th, td": { fontSize: 16, p: "10px" } }}
           >
-            <TableRow>
-              <TableCell>Zakres naprawy</TableCell>
-              <TableCell>{servicesPerCar[+num].name}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Koszt netto</TableCell>
-              <TableCell>{servicesPerCar[+num].costNetto}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Koszt brutto</TableCell>
-              <TableCell>{servicesPerCar[+num].costBrutto}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Data wykonania usługi</TableCell>
-              <TableCell>{servicesPerCar[+num].dateOfService}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Numer faktury</TableCell>
-              <TableCell>{servicesPerCar[+num].invoiceNumber}</TableCell>
-            </TableRow>
+            <TableBody>
+              <TableRow>
+                <TableCell>Zakres naprawy</TableCell>
+                <TableCell>{servicesPerCar[+num].name}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Koszt netto</TableCell>
+                <TableCell>{servicesPerCar[+num].costNetto}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Koszt brutto</TableCell>
+                <TableCell>{servicesPerCar[+num].costBrutto}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Data wykonania usługi</TableCell>
+                <TableCell>{servicesPerCar[+num].dateOfService}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Numer faktury</TableCell>
+                <TableCell>{servicesPerCar[+num].invoiceNumber}</TableCell>
+              </TableRow>
+            </TableBody>
           </Table>
         </Box>
       </Modal>

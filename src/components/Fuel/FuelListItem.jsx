@@ -1,21 +1,35 @@
 import React from "react";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
 
 export default function FuelListItem({ fuel, dateChosen }) {
-  console.log(fuel);
-  console.log(dateChosen);
-  return (
-    <>
-      {fuel.month === dateChosen.month && fuel.year === dateChosen.year && (
-        <div style={{ marginBottom: "20px" }}>
-          <p>Rejestracja: {fuel.plate}</p>
-          <p>miesiąc: {fuel.month}</p>
-          <p>rok: {fuel.year}</p>
-          <p>netto LPG: {fuel.costLPG}</p>
-          <p>ilość LPG: {fuel.quantityLPG}</p>
-          <p>netto PB: {fuel.costPB}</p>
-          <p>ilość PB: {fuel.quantityPB}</p>
-        </div>
-      )}
-    </>
-  );
+  if (dateChosen.month === "(wszystkie)" && dateChosen.year === "(wszystkie)") {
+    return (
+      <TableRow sx={{ "& > td": { textAlign: "center", padding: "10px 0" } }}>
+        <TableCell>{fuel.plate}</TableCell>
+        <TableCell>{fuel.costLPG} zł</TableCell>
+        <TableCell>{fuel.quantityLPG} L</TableCell>
+        <TableCell>{fuel.costPB} zł</TableCell>
+        <TableCell>{fuel.quantityPB} L</TableCell>
+      </TableRow>
+    );
+  } else {
+    return (
+      <>
+        {fuel.month === dateChosen.month &&
+          fuel.year === dateChosen.year &&
+          fuel.plate === dateChosen.plate && (
+            <TableRow
+              sx={{ "& > td": { textAlign: "center", padding: "10px 0" } }}
+            >
+              <TableCell>{fuel.plate}</TableCell>
+              <TableCell>{fuel.costLPG} zł</TableCell>
+              <TableCell>{fuel.quantityLPG} L</TableCell>
+              <TableCell>{fuel.costPB} zł</TableCell>
+              <TableCell>{fuel.quantityPB} L</TableCell>
+            </TableRow>
+          )}
+      </>
+    );
+  }
 }

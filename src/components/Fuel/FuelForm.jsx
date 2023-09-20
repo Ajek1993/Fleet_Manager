@@ -5,13 +5,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import {
-  doc,
-  updateDoc,
-  addDoc,
-  collection,
-  setDoc,
-} from "firebase/firestore/lite";
+import { doc, updateDoc, setDoc } from "firebase/firestore/lite";
 import { db } from "../../firebase";
 import { useUser } from "../../providers/UserProvider";
 
@@ -36,21 +30,6 @@ export default function FuelForm({ handleFormOpen }) {
 
   const handleAddFuel = async (e) => {
     e.preventDefault();
-
-    // const docRef = await addDoc(collection(db, "fuel"), {
-    //   plate: fuel.plate,
-    //   mounth: fuel.mounth,
-    //   costLPG: fuel.costLPG,
-    //   costPB: fuel.costPB,
-    //   quantityLPG: fuel.quantityLPG,
-    //   quantityPB: fuel.quantityPB,
-    // });
-    // await updateDoc(
-    //   doc(db, "fuel", docRef.id),
-    //   { ID: docRef.id },
-    //   { merge: true }
-    // );
-    // setFuels((prev) => [fuel, ...prev]);
 
     await setDoc(
       doc(db, "fuel", `${fuel.plate}-${fuel.month}-${fuel.year}`),
@@ -161,6 +140,8 @@ export default function FuelForm({ handleFormOpen }) {
           value={fuel.costLPG}
           name="costLPG"
           type="number"
+          min="1"
+          max="9999"
           onChange={handleChange}
         />
         <TextField
@@ -170,6 +151,8 @@ export default function FuelForm({ handleFormOpen }) {
           value={fuel.quantityLPG}
           name="quantityLPG"
           type="number"
+          min="1"
+          max="9999"
           onChange={handleChange}
         />
         <TextField
@@ -179,6 +162,8 @@ export default function FuelForm({ handleFormOpen }) {
           value={fuel.costPB}
           name="costPB"
           type="number"
+          min="1"
+          max="9999"
           onChange={handleChange}
         />
         <TextField
@@ -188,6 +173,8 @@ export default function FuelForm({ handleFormOpen }) {
           value={fuel.quantityPB}
           name="quantityPB"
           type="number"
+          min="1"
+          max="9999"
           onChange={handleChange}
         />
 
