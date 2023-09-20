@@ -12,6 +12,7 @@ export default function UserProvider({ children }) {
   const [user, setUser] = useState(false);
   const [cars, setCars] = useState([]);
   const [services, setServices] = useState([]);
+  const [fuels, setFuels] = useState([]);
   const [carsPlates, setCarsPlates] = useState([]);
   const navigate = useNavigate();
 
@@ -19,8 +20,10 @@ export default function UserProvider({ children }) {
     const get = async () => {
       const carsCollection = collection(db, "cars");
       const servicesCollection = collection(db, "services");
+      const fuelsCollection = collection(db, "fuels");
       const querySnapshotCars = await getDocs(carsCollection);
       const querySnapshotServices = await getDocs(servicesCollection);
+      const querySnapshotFuels = await getDocs(fuelsCollection);
 
       querySnapshotCars.forEach((car) => {
         const carInfo = car.data();
@@ -29,6 +32,10 @@ export default function UserProvider({ children }) {
       querySnapshotServices.forEach((service) => {
         const serviceInfo = service.data();
         setServices((prev) => [...prev, serviceInfo]);
+      });
+      querySnapshotFuels.forEach((fuel) => {
+        const FuelInfo = fuel.data();
+        setFuels((prev) => [...prev, FuelInfo]);
       });
     };
     get();
@@ -93,6 +100,8 @@ export default function UserProvider({ children }) {
         setServices,
         deleteCar,
         deleteService,
+        fuels,
+        setFuels,
       }}
     >
       {children}
