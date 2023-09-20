@@ -10,6 +10,7 @@ export default function Fuel() {
   const handleFormOpen = () => {
     setFormOpen((prev) => !prev);
   };
+
   return (
     <div>
       <MenuAppBar />

@@ -16,26 +16,10 @@ import { db } from "../../firebase";
 import { useUser } from "../../providers/UserProvider";
 
 export default function FuelForm({ handleFormOpen }) {
-  const mounths = [
-    "styczeń",
-    "luty",
-    "marzec",
-    "kwiecień",
-    "maj",
-    "czerwiec",
-    "lipiec",
-    "sierpień",
-    "wrzesień",
-    "październik",
-    "listopad",
-    "grudzień",
-  ];
-
-  const years = [2022, 2023, 2024, 2025];
-  const { carsPlates, setFuels } = useUser();
+  const { carsPlates, setFuels, months, years } = useUser();
   const [fuel, setFuel] = useState({
     plate: "",
-    mounth: "",
+    month: "",
     year: "",
     costLPG: "",
     costPB: "",
@@ -69,19 +53,29 @@ export default function FuelForm({ handleFormOpen }) {
     // setFuels((prev) => [fuel, ...prev]);
 
     await setDoc(
-      doc(db, "fuel", `${fuel.plate}-${fuel.mounth}-${fuel.year}`),
+      doc(db, "fuel", `${fuel.plate}-${fuel.month}-${fuel.year}`),
       fuel
     );
+
+    await updateDoc(
+      doc(db, "fuel", `${fuel.plate}-${fuel.month}-${fuel.year}`),
+      { ID: `${fuel.plate}-${fuel.month}-${fuel.year}` },
+      { merge: true }
+    );
+
     setFuel({
       plate: "",
-      mounth: "",
+      month: "",
       year: "",
       costLPG: "",
       costPB: "",
       quantityLPG: "",
       quantityPB: "",
     });
-    setFuels((prev) => [fuel, ...prev]);
+    setFuels((prev) => [
+      { ...fuel, ID: `${fuel.plate}-${fuel.month}-${fuel.year}` },
+      ...prev,
+    ]);
 
     handleFormOpen();
   };
@@ -128,14 +122,14 @@ export default function FuelForm({ handleFormOpen }) {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              name="mounth"
-              value={fuel.mounth}
+              name="month"
+              value={fuel.month}
               label="Miesiąc"
               onChange={handleChange}
             >
-              {mounths.map((mounth) => (
-                <MenuItem key={mounth} value={mounth}>
-                  {mounth}
+              {months.map((month) => (
+                <MenuItem key={month} value={month}>
+                  {month}
                 </MenuItem>
               ))}
             </Select>

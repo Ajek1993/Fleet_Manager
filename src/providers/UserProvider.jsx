@@ -16,11 +16,28 @@ export default function UserProvider({ children }) {
   const [carsPlates, setCarsPlates] = useState([]);
   const navigate = useNavigate();
 
+  const [months, setMonths] = useState([
+    "styczeń",
+    "luty",
+    "marzec",
+    "kwiecień",
+    "maj",
+    "czerwiec",
+    "lipiec",
+    "sierpień",
+    "wrzesień",
+    "październik",
+    "listopad",
+    "grudzień",
+  ]);
+
+  const [years, setYears] = useState([2022, 2023, 2024, 2025]);
+
   useEffect(() => {
     const get = async () => {
       const carsCollection = collection(db, "cars");
       const servicesCollection = collection(db, "services");
-      const fuelsCollection = collection(db, "fuels");
+      const fuelsCollection = collection(db, "fuel");
       const querySnapshotCars = await getDocs(carsCollection);
       const querySnapshotServices = await getDocs(servicesCollection);
       const querySnapshotFuels = await getDocs(fuelsCollection);
@@ -34,8 +51,8 @@ export default function UserProvider({ children }) {
         setServices((prev) => [...prev, serviceInfo]);
       });
       querySnapshotFuels.forEach((fuel) => {
-        const FuelInfo = fuel.data();
-        setFuels((prev) => [...prev, FuelInfo]);
+        const fuelInfo = fuel.data();
+        setFuels((prev) => [...prev, fuelInfo]);
       });
     };
     get();
@@ -102,6 +119,8 @@ export default function UserProvider({ children }) {
         deleteService,
         fuels,
         setFuels,
+        months,
+        years,
       }}
     >
       {children}
