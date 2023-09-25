@@ -1,8 +1,9 @@
 import React from "react";
 import { Box, Typography, Container } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
-export default function FuelHeader({ handleFormOpen }) {
+export default function FuelHeader({ handleFormOpen, handleFilterOpen }) {
   return (
     <Container maxWidth="md">
       <Box
@@ -17,6 +18,14 @@ export default function FuelHeader({ handleFormOpen }) {
           position: "relative",
         }}
       >
+        {" "}
+        <Box component="div" sx={{ left: 0, position: "absolute" }}>
+          <FilterAltIcon
+            color="info"
+            fontSize="large"
+            onClick={handleFilterOpen}
+          />
+        </Box>
         <Typography variant="h5" component="h2">
           Paliwo
         </Typography>

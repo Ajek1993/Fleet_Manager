@@ -17,7 +17,6 @@ export default function UserProvider({ children }) {
   const navigate = useNavigate();
 
   const [months, setMonths] = useState([
-    "(wszystkie)",
     "styczeń",
     "luty",
     "marzec",
@@ -32,7 +31,7 @@ export default function UserProvider({ children }) {
     "grudzień",
   ]);
 
-  const [years, setYears] = useState(["(wszystkie)", 2022, 2023, 2024, 2025]);
+  const [years, setYears] = useState([2021, 2022, 2023, 2024, 2025, 2026]);
 
   useEffect(() => {
     const get = async () => {

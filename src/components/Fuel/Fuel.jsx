@@ -6,17 +6,25 @@ import FuelList from "./FuelList";
 
 export default function Fuel() {
   const [formOpen, setFormOpen] = useState(false);
+  const [filterOpen, setFilterOpen] = useState(false);
 
   const handleFormOpen = () => {
     setFormOpen((prev) => !prev);
   };
 
+  const handleFilterOpen = () => {
+    setFilterOpen((prev) => !prev);
+  };
+
   return (
     <div>
       <MenuAppBar />
-      <FuelHeader handleFormOpen={handleFormOpen} />
+      <FuelHeader
+        handleFormOpen={handleFormOpen}
+        handleFilterOpen={handleFilterOpen}
+      />
       {formOpen && <FuelForm handleFormOpen={handleFormOpen} />}
-      {!formOpen && <FuelList />}
+      {!formOpen && <FuelList filterOpen={filterOpen} />}
     </div>
   );
 }
