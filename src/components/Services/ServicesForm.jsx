@@ -46,8 +46,8 @@ export default function ServicesForm({ handleFormOpen }) {
       { ID: docRef.id },
       { merge: true }
     );
-    console.log("Document written with ID: ", docRef.id);
-    console.log(docRef);
+    // console.log("Document written with ID: ", docRef.id);
+    // console.log(docRef);
     setServices((prev) => [{ ...service, ID: docRef.id }, ...prev]);
 
     handleFormOpen();

@@ -4,7 +4,6 @@ import { app } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { collection, getDocs, doc, deleteDoc } from "firebase/firestore/lite";
 import { db } from "../firebase";
-// import { doc, deleteDoc } from "firebase/firestore";
 
 const UserContext = createContext(null);
 
@@ -34,6 +33,18 @@ export default function UserProvider({ children }) {
   const [years, setYears] = useState([2021, 2022, 2023, 2024, 2025, 2026]);
 
   useEffect(() => {
+    const auth = getAuth(app);
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+        console.log(user);
+      } else {
+        setUser(null);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
     const get = async () => {
       const carsCollection = collection(db, "cars");
       const servicesCollection = collection(db, "services");
@@ -59,7 +70,9 @@ export default function UserProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    setCarsPlates(cars.map((car) => car.plate));
+    setCarsPlates(
+      cars.filter(({ userID }) => userID === user.uid).map((car) => car.plate)
+    );
   }, [cars]);
 
   const handleLogout = () => {
@@ -73,18 +86,6 @@ export default function UserProvider({ children }) {
         // An error happened.
       });
   };
-
-  useEffect(() => {
-    const auth = getAuth(app);
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-        console.log(user);
-      } else {
-        setUser(null);
-      }
-    });
-  }, []);
 
   const deleteCar = async (car) => {
     console.log(car);

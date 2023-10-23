@@ -7,7 +7,7 @@ import { useUser } from "../../providers/UserProvider";
 
 export default function CarsForm({ handleFormOpen }) {
   const today = new Date().toLocaleDateString("en-CA");
-  const { setCars } = useUser();
+  const { setCars, user } = useUser();
   const [car, setCar] = useState({
     plate: "",
     brand: "",
@@ -16,6 +16,7 @@ export default function CarsForm({ handleFormOpen }) {
     technicalExamination: today,
     oilChange: today,
     actualMilage: "",
+    userID: user.uid,
   });
 
   const handleChange = ({ target: { name, value } }) => {
@@ -38,6 +39,7 @@ export default function CarsForm({ handleFormOpen }) {
       technicalExamination: "",
       oilChange: "",
       actualMilage: "",
+      userID: user.uid,
     });
 
     handleFormOpen();

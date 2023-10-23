@@ -5,14 +5,16 @@ import { Container } from "@mui/material";
 import { useUser } from "../../providers/UserProvider";
 
 export default function ServiceList() {
-  const { cars } = useUser();
+  const { cars, user } = useUser();
 
   return (
     <Container maxWidth="md" sx={{ p: 0 }}>
       <List>
-        {cars.map(({ plate}) => (
-          <ServiceListItem plate={plate} key={plate} />
-        ))}
+        {cars
+          .filter(({ userID }) => userID === user.uid)
+          .map(({ plate }) => (
+            <ServiceListItem plate={plate} key={plate} />
+          ))}
       </List>
     </Container>
   );

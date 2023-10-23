@@ -15,7 +15,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 export default function FuelList({ filterOpen }) {
-  const { fuels, months, years, carsPlates } = useUser();
+  const { fuels, months, years, carsPlates, user } = useUser();
 
   const [date, setDate] = useState({
     plate: "(wszystkie)",
@@ -127,9 +127,11 @@ export default function FuelList({ filterOpen }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {fuels.map((fuel) => (
-              <FuelListItem key={fuel.ID} fuel={fuel} dateChosen={date} />
-            ))}
+            {fuels
+              .filter((eachFuel) => eachFuel.userID === user.uid)
+              .map((fuel) => (
+                <FuelListItem key={fuel.ID} fuel={fuel} dateChosen={date} />
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

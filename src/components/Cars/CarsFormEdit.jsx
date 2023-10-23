@@ -17,7 +17,7 @@ export default function CarsFormEdit({
   },
   handleClose,
 }) {
-  const { setCars } = useUser();
+  const { setCars, user } = useUser();
   const [car, setCar] = useState({
     plate,
     brand,
@@ -26,6 +26,7 @@ export default function CarsFormEdit({
     technicalExamination,
     oilChange,
     actualMilage,
+    userID: user.uid,
   });
 
   const handleChange = ({ target: { name, value } }) => {

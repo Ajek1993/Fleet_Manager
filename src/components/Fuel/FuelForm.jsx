@@ -10,7 +10,7 @@ import { db } from "../../firebase";
 import { useUser } from "../../providers/UserProvider";
 
 export default function FuelForm({ handleFormOpen }) {
-  const { carsPlates, setFuels, months, years } = useUser();
+  const { carsPlates, setFuels, months, years, user } = useUser();
   const [fuel, setFuel] = useState({
     plate: "",
     month: "",
@@ -19,6 +19,7 @@ export default function FuelForm({ handleFormOpen }) {
     costPB: "",
     quantityLPG: "",
     quantityPB: "",
+    userID: user.uid,
   });
 
   const handleChange = ({ target: { name, value } }) => {

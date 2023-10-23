@@ -79,19 +79,13 @@ export default function ServiceInfo({ plate }) {
               }}
             >
               <TableCell>Zakres naprawy</TableCell>
-              {/* <TableCell>Koszt netto</TableCell> */}
-              {/* <TableCell>Koszt brutto</TableCell> */}
               <TableCell>Data usługi</TableCell>
-              {/* <TableCell>Numer faktury</TableCell> */}
               <TableCell>Akcje</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {servicesPerCar.map(
-              (
-                { name, costNetto, costBrutto, invoiceNumber, dateOfService },
-                i
-              ) => {
+            {servicesPerCar.length !== 0 &&
+              servicesPerCar.map(({ name, dateOfService }, i) => {
                 return (
                   <TableRow
                     key={name + i}
@@ -103,10 +97,7 @@ export default function ServiceInfo({ plate }) {
                     <TableCell align="center" sx={{ maxWidth: "30vw" }}>
                       {name}
                     </TableCell>
-                    {/* <TableCell align="center">{costNetto} zł</TableCell> */}
-                    {/* <TableCell align="center">{costBrutto} zł</TableCell> */}
                     <TableCell align="center">{dateOfService}</TableCell>
-                    {/* <TableCell align="center">{invoiceNumber}</TableCell> */}
                     <TableCell
                       sx={{
                         display: "flex",
@@ -134,48 +125,49 @@ export default function ServiceInfo({ plate }) {
                     </TableCell>
                   </TableRow>
                 );
-              }
-            )}
+              })}
           </TableBody>
         </Table>
       </TableContainer>
-      <Modal
-        open={openModalInfo}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Table
-            size="medium"
-            aria-label="a dense table"
-            sx={{ "& > th, td": { fontSize: 16, p: "10px" } }}
-          >
-            <TableBody>
-              <TableRow>
-                <TableCell>Zakres naprawy</TableCell>
-                <TableCell>{servicesPerCar[+num].name}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Koszt netto</TableCell>
-                <TableCell>{servicesPerCar[+num].costNetto}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Koszt brutto</TableCell>
-                <TableCell>{servicesPerCar[+num].costBrutto}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Data wykonania usługi</TableCell>
-                <TableCell>{servicesPerCar[+num].dateOfService}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Numer faktury</TableCell>
-                <TableCell>{servicesPerCar[+num].invoiceNumber}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </Box>
-      </Modal>
+      {servicesPerCar.length !== 0 && (
+        <Modal
+          open={openModalInfo}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Table
+              size="medium"
+              aria-label="a dense table"
+              sx={{ "& > th, td": { fontSize: 16, p: "10px" } }}
+            >
+              <TableBody>
+                <TableRow>
+                  <TableCell>Zakres naprawy</TableCell>
+                  <TableCell>{servicesPerCar[+num].name}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Koszt netto</TableCell>
+                  <TableCell>{servicesPerCar[+num].costNetto}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Koszt brutto</TableCell>
+                  <TableCell>{servicesPerCar[+num].costBrutto}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Data wykonania usługi</TableCell>
+                  <TableCell>{servicesPerCar[+num].dateOfService}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Numer faktury</TableCell>
+                  <TableCell>{servicesPerCar[+num].invoiceNumber}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </Box>
+        </Modal>
+      )}
       <Modal
         open={openModal}
         onClose={handleClose}

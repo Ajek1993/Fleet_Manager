@@ -5,34 +5,38 @@ import { Container } from "@mui/material";
 import { useUser } from "../../providers/UserProvider";
 
 export default function CarsList() {
-  const { cars } = useUser();
+  const { cars, user } = useUser();
   return (
     <Container maxWidth="md" sx={{ p: 0 }}>
       <List>
-        {cars.map(
-          ({
-            plate,
-            brand,
-            model,
-            insurance,
-            technicalExamination,
-            oilChange,
-            actualMilage,
-          }) => (
-            <CarsListItem
-              carInfo={{
-                plate,
-                brand,
-                model,
-                insurance,
-                technicalExamination,
-                oilChange,
-                actualMilage,
-              }}
-              key={plate}
-            />
-          )
-        )}
+        {cars
+          .filter(({ userID }) => userID === user.uid)
+          .map(
+            ({
+              plate,
+              brand,
+              model,
+              insurance,
+              technicalExamination,
+              oilChange,
+              actualMilage,
+              userID,
+            }) => (
+              <CarsListItem
+                carInfo={{
+                  plate,
+                  brand,
+                  model,
+                  insurance,
+                  technicalExamination,
+                  oilChange,
+                  actualMilage,
+                  userID,
+                }}
+                key={plate}
+              />
+            )
+          )}
       </List>
     </Container>
   );
