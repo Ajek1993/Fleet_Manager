@@ -71,7 +71,9 @@ export default function UserProvider({ children }) {
 
   useEffect(() => {
     setCarsPlates(
-      cars.filter(({ userID }) => userID === user.uid).map((car) => car.plate)
+      cars
+        .filter(({ userID }) => (user ? userID === user.uid : []))
+        .map((car) => car.plate)
     );
   }, [cars]);
 
