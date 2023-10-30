@@ -6,6 +6,7 @@ import { collection, getDocs, doc, deleteDoc } from "firebase/firestore/lite";
 import { db } from "../firebase";
 
 const UserContext = createContext(null);
+const isLogged = sessionStorage.getItem("isLogged");
 
 export default function UserProvider({ children }) {
   const [user, setUser] = useState(false);
@@ -38,6 +39,7 @@ export default function UserProvider({ children }) {
       if (user) {
         setUser(user);
         console.log(user);
+        sessionStorage.setItem("isLogged", true);
       } else {
         setUser(null);
       }
@@ -131,6 +133,7 @@ export default function UserProvider({ children }) {
   );
 }
 export const useUser = () => useContext(UserContext);
+export { isLogged };
 
 //trzeba to naprawić
 

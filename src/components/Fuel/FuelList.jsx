@@ -122,8 +122,8 @@ export default function FuelList({ filterOpen }) {
               <TableCell>Rejestracja</TableCell>
               <TableCell>Koszt netto LPG</TableCell>
               <TableCell>Ilość LPG</TableCell>
-              <TableCell>Koszt netto PB</TableCell>
-              <TableCell>Ilość PB</TableCell>
+              <TableCell>Koszt netto PB/Diesel</TableCell>
+              <TableCell>Ilość PB/Diesel</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

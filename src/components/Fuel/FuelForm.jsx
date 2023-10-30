@@ -19,6 +19,7 @@ export default function FuelForm({ handleFormOpen }) {
     costPB: "",
     quantityLPG: "",
     quantityPB: "",
+    distance: "",
     userID: user.uid,
   });
 
@@ -51,6 +52,8 @@ export default function FuelForm({ handleFormOpen }) {
       costPB: "",
       quantityLPG: "",
       quantityPB: "",
+      distance: "",
+      userID: user.uid,
     });
     setFuels((prev) => [
       { ...fuel, ID: `${fuel.plate}-${fuel.month}-${fuel.year}` },
@@ -158,7 +161,7 @@ export default function FuelForm({ handleFormOpen }) {
         />
         <TextField
           required
-          label="Koszt netto PB"
+          label="Koszt netto PB/Diesel"
           variant="standard"
           value={fuel.costPB}
           name="costPB"
@@ -169,10 +172,21 @@ export default function FuelForm({ handleFormOpen }) {
         />
         <TextField
           required
-          label="Ilość litrów PB"
+          label="Ilość litrów PB/Diesel"
           variant="standard"
           value={fuel.quantityPB}
           name="quantityPB"
+          type="number"
+          min="1"
+          max="9999"
+          onChange={handleChange}
+        />
+        <TextField
+          required
+          label="Przejechane kilometry"
+          variant="standard"
+          value={fuel.distance}
+          name="distance"
           type="number"
           min="1"
           max="9999"

@@ -149,11 +149,11 @@ export default function ServiceInfo({ plate }) {
                 </TableRow>
                 <TableRow>
                   <TableCell>Koszt netto</TableCell>
-                  <TableCell>{servicesPerCar[+num].costNetto}</TableCell>
+                  <TableCell>{servicesPerCar[+num].costNetto} zł</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Koszt brutto</TableCell>
-                  <TableCell>{servicesPerCar[+num].costBrutto}</TableCell>
+                  <TableCell>{servicesPerCar[+num].costBrutto} zł</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Data wykonania usługi</TableCell>
