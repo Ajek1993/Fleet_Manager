@@ -14,6 +14,7 @@ export default function FuelForm({ handleFormOpen }) {
   const [fuel, setFuel] = useState({
     plate: "",
     month: "",
+    monthNum: "",
     year: "",
     costLPG: "",
     costPB: "",
@@ -27,6 +28,7 @@ export default function FuelForm({ handleFormOpen }) {
     setFuel((prev) => ({
       ...prev,
       [name]: value,
+      monthNum: months.indexOf(fuel.month) + 1,
     }));
   };
 
@@ -47,6 +49,7 @@ export default function FuelForm({ handleFormOpen }) {
     setFuel({
       plate: "",
       month: "",
+      monthNum: "",
       year: "",
       costLPG: "",
       costPB: "",

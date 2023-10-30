@@ -12,6 +12,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import CostListItem from "./CostListItem";
 
 export default function CostList({ filterOpen }) {
   const { fuels, months, years, carsPlates, user } = useUser();
@@ -102,7 +103,37 @@ export default function CostList({ filterOpen }) {
           </Box>
         </Box>
       )}
-      Tu będzie lista
+      <TableContainer component={Paper} sx={{ marginTop: 2 }}>
+        <Table
+          size="small"
+          aria-label="a dense table"
+          sx={{ "& > th, td": { fontSize: 12 } }}
+        >
+          <TableHead>
+            <TableRow
+              sx={{
+                "& > th": {
+                  padding: "4px 0",
+                  textAlign: "center",
+                  fontWeight: 700,
+                },
+              }}
+            >
+              <TableCell>Rejestracja</TableCell>
+              <TableCell>Koszt netto serwisów</TableCell>
+              <TableCell>Koszt netto paliwa</TableCell>
+              <TableCell>Koszt netto zł/km</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {fuels
+              .filter((eachFuel) => eachFuel.userID === user.uid)
+              .map((fuel) => (
+                <CostListItem key={fuel.ID} fuel={fuel} dateChosen={date} />
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Container>
   );
 }
