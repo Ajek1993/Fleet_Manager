@@ -10,7 +10,7 @@ function CostListItemDetail({ fuel }) {
     .filter(
       (service) =>
         service.carPlate === fuel.plate &&
-        service.dateOfService.slice(0, 4) === fuel.year &&
+        +service.dateOfService.slice(0, 4) === fuel.year &&
         +service.dateOfService.slice(5, 7) === fuel.monthNum
     )
     .map((service) => service.costNetto)

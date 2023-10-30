@@ -134,6 +134,10 @@ export default function CostList({ filterOpen }) {
           </TableBody>
         </Table>
       </TableContainer>
+      <p style={{ marginTop: "10px" }}>
+        * Jeżeli nie widać danej pozycji, upewnij się, że dodano koszty paliwa w
+        zadanym okresie
+      </p>
     </Container>
   );
 }
