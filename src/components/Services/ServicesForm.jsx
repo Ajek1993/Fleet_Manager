@@ -122,7 +122,7 @@ export default function ServicesForm({ handleFormOpen }) {
         />
         <TextField
           required
-          label="Number faktury"
+          label="Numer faktury"
           variant="standard"
           value={service.invoiceNumber}
           name="invoiceNumber"
