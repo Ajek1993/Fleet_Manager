@@ -18,7 +18,6 @@ export default function FuelHeader({ handleFormOpen, handleFilterOpen }) {
           position: "relative",
         }}
       >
-        {" "}
         <Box component="div" sx={{ left: 0, position: "absolute" }}>
           <FilterAltIcon
             color="info"
