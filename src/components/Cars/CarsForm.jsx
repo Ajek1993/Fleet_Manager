@@ -138,8 +138,6 @@ export default function CarsForm({ handleFormOpen }) {
       }));
     }
 
-    console.log(errorsCounter);
-
     if (errorsCounter > 0) return;
 
     await setDoc(doc(db, "cars", car.plate), car);
