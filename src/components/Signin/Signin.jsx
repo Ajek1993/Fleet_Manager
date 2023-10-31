@@ -77,7 +77,7 @@ export default function SignIn() {
     } else {
       setErrors((prev) => ({
         ...prev,
-        paswword: "",
+        password: "",
       }));
     }
 
