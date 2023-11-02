@@ -266,7 +266,7 @@ export default function ServicesForm({ handleFormOpen }) {
         ) : (
           <TextField
             error
-            helperText="Wartość powinna być liczbą z zakresu 0-99999"
+            helperText="Wartość powinna być liczbą z zakresu 1-99999"
             required
             label="Koszt netto"
             variant="standard"
