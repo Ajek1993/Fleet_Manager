@@ -15,12 +15,57 @@ import Paper from "@mui/material/Paper";
 import CostListItem from "./CostListItem";
 
 export default function CostList({ filterOpen }) {
-  const { fuels, months, years, carsPlates, user } = useUser();
+  const { fuels, services, months, years, carsPlates, user } = useUser();
 
   const [date, setDate] = useState({
     plate: "(wszystkie)",
     month: "(wszystkie)",
     year: "(wszystkie)",
+  });
+
+  const costFinalData = [];
+
+  carsPlates.forEach((carPlate) => {
+    for (let i = 0; i < years.length; i++) {
+      for (let j = 1; j < 13; j++) {
+        const costData = {};
+
+        const costService = services.filter(
+          (service) =>
+            service.carPlate === carPlate &&
+            +service.dateOfService.slice(0, 4) === years[i] &&
+            +service.dateOfService.slice(5, 7) === j
+        );
+
+        const costFuel = fuels.filter(
+          (fuel) =>
+            fuel.plate === carPlate &&
+            +fuel.year === years[i] &&
+            +fuel.monthNum === j
+        );
+
+        costData.plate = carPlate;
+        costData.year = years[i];
+        costData.month = j;
+        costData.services = costService
+          .map((service) => {
+            return service.costNetto;
+          })
+          .reduce((a, c) => +a + +c, 0);
+
+        costData.fuel =
+          costFuel
+            .filter((fuel) => fuel.plate === carPlate)
+            .map((fuel) => +fuel.costLPG + +fuel.costPB)[0] || 0;
+
+        costData.distance =
+          costFuel
+            .filter((fuel) => fuel.plate === carPlate)
+            .map((fuel) => +fuel.distance)[0] || 0;
+
+        costFinalData.push(costData);
+      }
+    }
   });
 
   const handleChange = ({ target: { name, value } }) => {
@@ -131,13 +176,17 @@ export default function CostList({ filterOpen }) {
               .map((fuel) => (
                 <CostListItem key={fuel.ID} fuel={fuel} dateChosen={date} />
               ))}
+
+            {costFinalData.map((cost, i) => (
+              <CostListItem
+                key={cost.plate + i}
+                cost={cost}
+                dateChosen={date}
+              />
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <p style={{ marginTop: "10px" }}>
-        * Jeżeli nie widać danej pozycji, upewnij się, że dodano koszty paliwa w
-        zadanym okresie
-      </p>
     </Container>
   );
 }

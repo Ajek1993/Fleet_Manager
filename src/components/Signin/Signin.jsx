@@ -14,6 +14,7 @@ import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "../../firebase";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../providers/UserProvider";
 
 function Copyright(props) {
   return (
@@ -39,6 +40,9 @@ const defaultTheme = createTheme();
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const { user } = useUser();
+  user && navigate("/");
+
   const [values, setValues] = useState({
     email: "",
     password: "",
