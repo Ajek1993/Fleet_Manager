@@ -15,13 +15,156 @@ import Paper from "@mui/material/Paper";
 import CostListItem from "./CostListItem";
 
 export default function CostList({ filterOpen }) {
-  const { fuels, months, years, carsPlates, user } = useUser();
+  const { fuels, services, months, years, carsPlates, user } = useUser();
 
   const [date, setDate] = useState({
     plate: "(wszystkie)",
     month: "(wszystkie)",
     year: "(wszystkie)",
   });
+
+  // const dupala = [];
+
+  for (let i = 0; i < years.length; i++) {
+    for (let j = 1; j < 13; j++) {
+      const costData = {};
+
+      const costService = services.filter(
+        (service) =>
+          carsPlates.includes(service.carPlate) &&
+          +service.dateOfService.slice(0, 4) === years[i] &&
+          +service.dateOfService.slice(5, 7) === j
+      );
+
+      const costFuel = fuels.filter(
+        (fuel) =>
+          carsPlates.includes(fuel.plate) &&
+          +fuel.year === years[i] &&
+          +fuel.monthNum === j
+      );
+
+      // console.log(costFuel);
+
+      const filtredPlate =
+        costService.map((service) => {
+          return service.carPlate;
+        })[0] ||
+        costFuel.map((fuel) => {
+          return fuel.plate;
+        })[0];
+
+      costData.plate = filtredPlate;
+      costData.year = years[i];
+      costData.month = j;
+      costData.services = costService
+        .map((service) => {
+          return service.costNetto;
+        })
+        .reduce((a, c) => +a + +c, 0);
+
+      costData.fuel =
+        costFuel
+          .filter((fuel) => fuel.plate === filtredPlate)
+          .map((fuel) => +fuel.costLPG + +fuel.costPB)[0] || 0;
+
+      console.log(costData);
+    }
+  }
+  //     const chuj = {};
+
+  //
+
+  // console.log(
+  //   fuels
+  //     .filter(
+  //       (fuel) =>
+  //         fuel.plate === chuj.plate &&
+  //         fuel.monthNum === chuj.month &&
+  //         fuel.year === chuj.year
+  //     )
+  //     )
+  // );
+
+  // chuj.fuel =
+  //   fuels
+  //     .filter(
+  //       (fuel) =>
+  //         fuel.plate === chuj.plate &&
+  //         fuel.monthNum === chuj.month &&
+  //         fuel.year === chuj.year
+  //     )
+  //     .map((fuel) => +fuel.costLPG + +fuel.costPB)[0] || 0;
+
+  // dupala.push(chuj);
+  // console.log(chuj);
+  // console.log(
+  //   "Rejestracja:",
+  //   filtredPlate,
+  //   "Koszt:",
+  //   costService
+  //     .map((service) => {
+  //       return service.costNetto;
+  //     })
+  //     .reduce((a, c) => +a + +c, 0),
+  //   "Rok:",
+  //   years[i],
+  //   "Miesiąc:",
+  //   j
+  // );
+  //     }
+  //   }
+  // }
+
+  // const costsData = carsPlates.map((carsPlate) => {
+  //   const service = services.filter(
+  //     (service) => service.carPlate === carsPlate
+  //   );
+  //   const fuel = fuels.filter((fuel) => fuel.plate === carsPlate);
+  //   const data = [...service, ...fuel];
+
+  //   return data;
+  // });
+
+  // console.log(costsData);
+
+  // const costsFullData = costsData.map((costData) => {
+  //   return costData.map((costDataDetail) => {
+  //     const costInfo = {};
+  //     if (costDataDetail.plate || costDataDetail.carPlate) {
+  //       costInfo.plate = costDataDetail.plate || costDataDetail.carPlate;
+  //     }
+  //     if (costDataDetail.year) {
+  //       costInfo.year = costDataDetail.year;
+  //     } else {
+  //       costInfo.year = +costDataDetail.dateOfService.slice(0, 4);
+  //     }
+  //     if (costDataDetail.monthNum) {
+  //       costInfo.month = +costDataDetail.monthNum;
+  //     } else {
+  //       costInfo.month = +costDataDetail.dateOfService.slice(5, 7);
+  //     }
+  //     if (costDataDetail.costNetto) {
+  //       costInfo.services = +costDataDetail.costNetto;
+  //     } else {
+  //       costInfo.services = 0;
+  //     }
+  //     if (costDataDetail.costLPG && costDataDetail.costPB) {
+  //       costInfo.fuel = +costDataDetail.costLPG + +costDataDetail.costPB;
+  //     } else {
+  //       costInfo.fuel = 0;
+  //     }
+
+  //     return costInfo;
+  //   });
+  // });
+
+  // const costsArray = [];
+
+  // for (let i = 0; i < costsFullData.length; i++) {
+  //   costsArray.push(...costsFullData[i]);
+  // }
+
+  // console.log("Przerobiona tablica", costsArray);
 
   const handleChange = ({ target: { name, value } }) => {
     setDate((prev) => ({
@@ -131,6 +274,10 @@ export default function CostList({ filterOpen }) {
               .map((fuel) => (
                 <CostListItem key={fuel.ID} fuel={fuel} dateChosen={date} />
               ))}
+
+            {/* {costsArray.map((cost, i) => (
+              <CostListItem key={cost.plate + i} />
+            ))} */}
           </TableBody>
         </Table>
       </TableContainer>
