@@ -5,7 +5,6 @@ console.log(process.env);
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
-  // apiKey: "AIzaSyAiibKlHAEnInRzydHKPs2G4FbETif9kuc",
   authDomain: "fleet-manager-35d92.firebaseapp.com",
   projectId: "fleet-manager-35d92",
   storageBucket: "fleet-manager-35d92.appspot.com",
